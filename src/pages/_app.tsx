@@ -1,4 +1,3 @@
-import '@/styles/globals.css';
 import globalStyles from '@/styles/globals';
 import type { AppProps } from 'next/app';
 import { Global, ThemeProvider } from '@emotion/react';
