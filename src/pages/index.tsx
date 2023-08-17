@@ -6,8 +6,7 @@ import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 
 export default function Home() {
-    const { query } = useRouter();
-    console.log('index');
+    const { query, push } = useRouter();
 
     useEffect(() => {
         if (!query.code) return;
@@ -15,7 +14,9 @@ export default function Home() {
         const getGithubAuthToken = async () => {
             return await axios.get(`${BLOGRASS_AUTH_GET_TOKEN}${query.code}`);
         };
-        getGithubAuthToken();
+        getGithubAuthToken().then(() => {
+            push('/');
+        });
     }, [query.code]);
 
     return (
