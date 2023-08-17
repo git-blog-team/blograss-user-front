@@ -2,7 +2,11 @@ import globalStyles from '@/styles/globals';
 import type { AppProps } from 'next/app';
 import { Global, ThemeProvider } from '@emotion/react';
 import theme from '@/styles/theme';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import {
+    Hydrate,
+    QueryClient,
+    QueryClientProvider,
+} from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import Header from '@/layout/Header';
 import { Open_Sans } from 'next/font/google';
@@ -19,17 +23,18 @@ export default function App({ Component, pageProps }: AppProps) {
         },
     });
 
-    console.log(pageProps);
     return (
         <ThemeProvider theme={theme}>
             <QueryClientProvider client={queryClient}>
-                <Global styles={globalStyles} />
-                <AuthTokenContext>
-                    <main className={openSans.className}>
-                        <Header />
-                        <Component {...pageProps} />
-                    </main>
-                </AuthTokenContext>
+                <Hydrate state={pageProps.dehydratedState}>
+                    <Global styles={globalStyles} />
+                    <AuthTokenContext>
+                        <main className={openSans.className}>
+                            <Header />
+                            <Component {...pageProps} />
+                        </main>
+                    </AuthTokenContext>
+                </Hydrate>
                 <ReactQueryDevtools position="bottom-right" />
             </QueryClientProvider>
         </ThemeProvider>
