@@ -7,15 +7,15 @@ import { useEffect } from 'react';
 
 export default function Home() {
     const { query } = useRouter();
-
-    const getGithubAuthToken = async () => {
-        return await axios.get(`${BLOGRASS_AUTH_GET_TOKEN}${query.code}`);
-    };
+    console.log('index');
 
     useEffect(() => {
         if (!query.code) return;
-        const response = getGithubAuthToken();
-        console.log(response);
+
+        const getGithubAuthToken = async () => {
+            return await axios.get(`${BLOGRASS_AUTH_GET_TOKEN}${query.code}`);
+        };
+        getGithubAuthToken();
     }, [query.code]);
 
     return (

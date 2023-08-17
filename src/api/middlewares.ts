@@ -41,8 +41,17 @@ axios.interceptors.response.use(
                 'https://api.blograss.com:7777/auth',
             )
         ) {
-            Cookies.set(ACCESS_TOKEN, res.data.result[0].accessToken);
-            Cookies.set(REFRESH_TOKEN, res.data.result[0].refreshToken);
+            // accessToken 28800 8시간
+            // refreshToken 15811200 6개월
+
+            Cookies.set(ACCESS_TOKEN, res.data.result[0].accessToken, {
+                expires: 1 / 3,
+                secure: true,
+            });
+            Cookies.set(REFRESH_TOKEN, res.data.result[0].refreshToken, {
+                expires: 180,
+                secure: true,
+            });
         }
         return res.data;
     },
