@@ -10,6 +10,11 @@ export const globalStyles = () => css`
     *::before {
         box-sizing: border-box;
     }
+
+    body {
+        background-color: #f5f5f5;
+    }
+
     a {
         text-decoration: none;
     }
