@@ -1,5 +1,7 @@
 // import axios from '@/api/middlewares';
 // import { BLOGRASS_AUTH_GET_TOKEN, BLOGRASS_AUTH_LOGUN } from '@/constants/api';
+import axios from '@/api/middlewares';
+import { BLOGRASS_USER_LOGOUT } from '@/constants/api';
 import { useUserStore } from '@/store/userStore';
 import { RowSpaceBetweenCenter } from '@/styles/flexModules';
 import theme from '@/styles/theme';
@@ -20,6 +22,11 @@ export default function Header() {
         isLogin ? setIsLoginButton(true) : setIsLoginButton(false);
     }, [isLogin]);
 
+    const onClickLogOut = async () => {
+        const res = await axios.delete(BLOGRASS_USER_LOGOUT);
+        console.log(res);
+    };
+
     return (
         <StyledWrapperHeader>
             <div>
@@ -27,7 +34,7 @@ export default function Header() {
             </div>
             <div>
                 {isLoginButton ? (
-                    <button>로그아웃</button>
+                    <button onClick={onClickLogOut}>로그아웃</button>
                 ) : (
                     <Link href="https://api.blograss.com:7777/login/github">
                         로그인
