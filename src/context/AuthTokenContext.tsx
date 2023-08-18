@@ -18,6 +18,14 @@ export default function AuthTokenContext({
     if (isAccessToken) {
         updateUserStore(true);
     }
+    /**
+     * ACCESS_TOKEN 만료되어 없고, REFRESH_TOKEN 만 있는 경우
+     * 토큰 재발급 진행
+     */
+
+    /**
+     * ACCESS_TOKEN, REFRESH_TOKEN 둘다 없는 경우 아무것도 하지 않음
+     */
 
     return <>{children}</>;
 }
