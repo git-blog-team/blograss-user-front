@@ -33,30 +33,3 @@ const StyledMain = styled.section`
     width: 100%;
     background-color: #fff;
 `;
-
-// interface Props {
-//     req: any;
-//     query: any;
-// }
-
-// export const getServerSideProps = async ({
-//     req: { cookies },
-//     query,
-// }: Props) => {
-//     console.log(cookies, query);
-//     if (!query.code)
-//         return {
-//             props: {
-//                 data: {},
-//             },
-//         };
-//     const token = await fetch(`${BLOGRASS_AUTH_GET_TOKEN}${query.code}`).then(
-//         (res) => res.json(),
-//     );
-
-//     return {
-//         props: {
-//             data: token,
-//         },
-//     };
-// };
