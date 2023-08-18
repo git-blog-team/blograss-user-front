@@ -28,6 +28,13 @@ export default function Header() {
         isLogin ? setIsLoginButton(true) : setIsLoginButton(false);
     }, [isLogin]);
 
+    /**
+     * 로그아웃 버튼 클릭 시
+     * 1. 서버에 로그아웃 요청
+     * 2. 쿠키 삭제
+     * 3. zustand 스테이트 isLogin 값 변경
+     * 4. 메인 페이지로 이동
+     */
     const onClickLogOut = async () => {
         await axios
             .delete(BLOGRASS_USER_LOGOUT)
