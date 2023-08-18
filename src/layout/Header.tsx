@@ -10,6 +10,11 @@ import React, { useEffect, useState } from 'react';
 export default function Header() {
     const isLogin = useUserStore((state) => state.isLogin);
     const [isLoginButton, setIsLoginButton] = useState(false);
+    /**
+     * zustand의 스테이트 값을 바로 사용하여 로그인/로그아웃 버튼을 노출 할 경우
+     * Error: Hydration failed because the initial UI does not match what was rendered on the server.
+     *
+     */
 
     useEffect(() => {
         isLogin ? setIsLoginButton(true) : setIsLoginButton(false);
