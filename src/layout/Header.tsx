@@ -16,6 +16,7 @@ export default function Header() {
     const { push } = useRouter();
     const isLogin = useUserStore((state) => state.isLogin);
     const [isLoginButton, setIsLoginButton] = useState(false);
+    const updateUserStore = useUserStore((state) => state.handleLogin);
 
     /**
      * zustand의 스테이트 값을 바로 사용하여 로그인/로그아웃 버튼을 노출 할 경우
@@ -28,17 +29,17 @@ export default function Header() {
     }, [isLogin]);
 
     const onClickLogOut = async () => {
-        const res = await axios
+        await axios
             .delete(BLOGRASS_USER_LOGOUT)
             .then(() => {
                 Cookies.remove(ACCESS_TOKEN);
                 Cookies.remove(REFRESH_TOKEN);
+                updateUserStore(false);
                 push('/');
             })
             .catch((err) => {
-                console.log(err);
+                console.error(err);
             });
-        console.log(res);
     };
 
     return (
