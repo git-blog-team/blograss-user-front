@@ -21,7 +21,7 @@ axios.interceptors.request.use(
             // 토큰값이 있으면 헤더 Authorization에 넣어줌
         }
         if (refreshToken !== undefined) {
-            conf.headers.RAuthorization = `${refreshToken}`;
+            conf.headers.RAuthorization = `Bearer ${refreshToken}`;
         }
         return conf;
     },
