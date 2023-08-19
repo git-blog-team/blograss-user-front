@@ -17,6 +17,7 @@ export default function Header() {
     const isLogin = useUserStore((state) => state.isLogin);
     const [isLoginButton, setIsLoginButton] = useState(false);
     const updateUserStore = useUserStore((state) => state.handleLogin);
+    const { userId, userName } = useUserStore((state) => state);
 
     /**
      * zustand의 스테이트 값을 바로 사용하여 로그인/로그아웃 버튼을 노출 할 경우
@@ -56,7 +57,10 @@ export default function Header() {
             </div>
             <div>
                 {isLoginButton ? (
-                    <button onClick={onClickLogOut}>로그아웃</button>
+                    <>
+                        {userId} {userName}
+                        <button onClick={onClickLogOut}>로그아웃</button>
+                    </>
                 ) : (
                     <Link href="https://api.blograss.com:7777/login/github">
                         로그인
