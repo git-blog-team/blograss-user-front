@@ -28,7 +28,6 @@ axios.interceptors.request.use(
 
     async (error) => {
         // 요청실패시`
-        console.log('요청실패');
         await Promise.reject(error);
     },
 );
@@ -54,8 +53,6 @@ axios.interceptors.response.use(
     },
     async (error) => {
         // 토큰만료관련 작성될 로직 여기
-        console.log('응답실패');
-        console.log(error.response.status);
         await Promise.reject(error);
     },
 );

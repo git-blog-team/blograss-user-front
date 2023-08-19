@@ -29,7 +29,6 @@ export default function App({ Component, pageProps }: AppProps) {
     const getUserData = () => {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         axios.get(BLOGRASS_GET_USER_DATA).then((res: any) => {
-            console.log('res', res);
             updateUserStore(true);
             updateUserData(res.result[0]);
         });
