@@ -26,19 +26,20 @@ export default function App({ Component, pageProps }: AppProps) {
     const updateUserStore = useUserStore((state) => state.handleLogin);
     const updateUserData = useUserStore((state) => state.updateUserData);
 
-    const getUserData = () => {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        axios.get(BLOGRASS_GET_USER_DATA).then((res: any) => {
-            updateUserStore(true);
-            updateUserData(res.result[0]);
-        });
+    const getUserData = async () => {
+        return await axios.get(BLOGRASS_GET_USER_DATA);
     };
 
     useEffect(() => {
         if (isAccessToken && isRefreshToken) {
-            getUserData();
+            getUserData().then((res) => {
+                if (res) {
+                    updateUserStore(true);
+                    updateUserData(res.data.result[0]);
+                }
+            });
         }
-    }, []);
+    }, [isAccessToken, isRefreshToken]);
 
     const queryClient = new QueryClient({
         defaultOptions: {
