@@ -45,7 +45,11 @@ axios.interceptors.response.use(
     // 첫번째인자 : response 진행시, 두번째인자 : response 실패시
     (res) => {
         console.log(res);
-        if (res.request.responseURL === 'https://api.blograss.com:7777/auth') {
+        if (
+            res.request.responseURL.includes(
+                'https://api.blograss.com:7777/auth?code=',
+            )
+        ) {
             // accessToken 28800 8시간 프론트에서는 6개월로 설정
             // refreshToken 15811200 6개월
 
