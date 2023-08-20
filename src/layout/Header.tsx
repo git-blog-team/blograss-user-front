@@ -1,5 +1,5 @@
-import axios from '@/api/axiosInterceptors';
-import { BLOGRASS_USER_LOGOUT } from '@/constants/api';
+// import axios from '@/api/axiosInterceptors';
+// import { BLOGRASS_USER_LOGOUT } from '@/constants/api';
 import { ACCESS_TOKEN, REFRESH_TOKEN } from '@/constants/common';
 import { useUserStore } from '@/store/userStore';
 import { RowSpaceBetweenCenter } from '@/styles/flexModules';
@@ -9,6 +9,7 @@ import Cookies from 'js-cookie';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
+import { authAPI } from '@/api/auth';
 
 export default function Header() {
     const { push } = useRouter();
@@ -35,8 +36,8 @@ export default function Header() {
      * 4. 메인 페이지로 이동
      */
     const onClickLogOut = async () => {
-        await axios
-            .delete(BLOGRASS_USER_LOGOUT)
+        await authAPI
+            .deleteLogOut()
             .then(() => {
                 Cookies.remove(ACCESS_TOKEN);
                 Cookies.remove(REFRESH_TOKEN);

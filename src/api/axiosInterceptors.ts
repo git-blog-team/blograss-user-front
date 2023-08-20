@@ -1,7 +1,8 @@
-import { BLOGRASS_TOKEN_REPUBLISH } from '@/constants/api';
+// import { BLOGRASS_TOKEN_REPUBLISH } from '@/constants/api';
 import { ACCESS_TOKEN, REFRESH_TOKEN } from '@/constants/common';
 import Axios from 'axios';
 import Cookies from 'js-cookie';
+import { authAPI } from './auth';
 
 const axios = Axios.create({
     baseURL: 'https://api.blograss.com:7777',
@@ -63,8 +64,8 @@ axios.interceptors.response.use(
         // 토큰만료관련 작성될 로직 여기
         if (error.response.status === 401) {
             // 토큰만료시 토큰 재발급 요청
-            const data = await axios
-                .post(BLOGRASS_TOKEN_REPUBLISH)
+            const data = await authAPI
+                .postGetTokenRepublish()
                 .then(() => {
                     // 토큰 재발급 성공시 먼저 실패한 api 재요청
                     return axios.request({

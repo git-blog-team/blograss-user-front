@@ -13,9 +13,8 @@ import { Open_Sans } from 'next/font/google';
 import Cookies from 'js-cookie';
 import { ACCESS_TOKEN, REFRESH_TOKEN } from '@/constants/common';
 import { useUserStore } from '@/store/userStore';
-import { BLOGRASS_GET_USER_DATA } from '@/constants/api';
-import axios from '@/api/axiosInterceptors';
 import { useEffect } from 'react';
+import { authAPI } from '@/api/auth';
 
 const openSans = Open_Sans({ subsets: ['latin'] });
 
@@ -25,13 +24,9 @@ export default function App({ Component, pageProps }: AppProps) {
     const updateUserStore = useUserStore((state) => state.handleLogin);
     const updateUserData = useUserStore((state) => state.updateUserData);
 
-    const getUserData = async () => {
-        return await axios.get(BLOGRASS_GET_USER_DATA);
-    };
-
     useEffect(() => {
         if (isAccessToken && isRefreshToken) {
-            getUserData().then((res) => {
+            authAPI.getUserData().then((res) => {
                 if (res) {
                     updateUserStore(true);
                     updateUserData(res.data.result[0]);
