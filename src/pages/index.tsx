@@ -1,19 +1,21 @@
 import ListPageHeader from '@/components/ListPageHeader';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
-// import { useEffect } from 'react';
 import { authAPI } from '@/api/auth';
 import { useQuery } from '@tanstack/react-query';
+import GridLoader from '@/components/GridLoader';
+import theme from '@/styles/theme';
+import { ColumnCenterCenter } from '@/styles/flexModules';
 
-export default function Home({
-    query,
-}: {
+interface IProps {
     query: {
         code?: string;
     };
-}) {
+}
+
+export default function Home({ query }: IProps) {
     const { push } = useRouter();
-    const { isLoading, error } = useQuery({
+    const { isFetching, error } = useQuery({
         queryKey: ['getAuthToken'],
         queryFn: async () => {
             const data = await authAPI.getAuthToken(query.code).finally(() => {
@@ -28,19 +30,12 @@ export default function Home({
         console.error(error);
     }
 
-    // console.log(isLoading, data, error, !!query.code);
-
-    // useEffect(() => {
-    //     if (!query.code) return;
-    //     authAPI.getAuthToken(query.code).then(() => {
-    //         push('/');
-    //     });
-    // }, [query.code]);
-
     return (
         <>
-            {isLoading ? (
-                <h1> 로딩중...</h1>
+            {isFetching ? (
+                <StyledWrapperLoader>
+                    <GridLoader size={100} color={theme.colors.point_green} />
+                </StyledWrapperLoader>
             ) : (
                 <StyledSection>
                     <ListPageHeader />
@@ -50,6 +45,14 @@ export default function Home({
     );
 }
 
+const StyledWrapperLoader = styled.section`
+    ${ColumnCenterCenter}
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100vh;
+`;
+
 const StyledSection = styled.section`
     display: flex;
     flex-direction: column;
@@ -58,13 +61,7 @@ const StyledSection = styled.section`
     background-color: #fff;
 `;
 
-export const getServerSideProps = async ({
-    query,
-}: {
-    query: {
-        code?: string;
-    };
-}) => {
+export const getServerSideProps = async ({ query }: IProps) => {
     return {
         props: {
             query,

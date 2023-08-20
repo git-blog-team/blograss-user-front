@@ -20,6 +20,13 @@ export const ColumnFlexStartCenter = () => css`
     align-items: center;
 `;
 
+export const ColumnCenterCenter = () => css`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+`;
+
 export const RowSpaceBetweenCenter = () => css`
     display: flex;
     flex-direction: row;
