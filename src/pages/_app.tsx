@@ -10,22 +10,20 @@ import {
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import Header from '@/layout/Header';
 import { Open_Sans } from 'next/font/google';
-import Cookies from 'js-cookie';
-import { ACCESS_TOKEN, REFRESH_TOKEN } from '@/constants/common';
 import { useUserStore } from '@/store/userStore';
 import { useEffect } from 'react';
 import { authAPI } from '@/api/auth';
+import { getTokens } from '@/utils/cookie';
 
 const openSans = Open_Sans({ subsets: ['latin'] });
 
 export default function App({ Component, pageProps }: AppProps) {
-    const isAccessToken = Cookies.get(ACCESS_TOKEN);
-    const isRefreshToken = Cookies.get(REFRESH_TOKEN);
+    const { accessToken, refreshToken } = getTokens();
     const updateUserStore = useUserStore((state) => state.handleLogin);
     const updateUserData = useUserStore((state) => state.updateUserData);
 
     useEffect(() => {
-        if (isAccessToken && isRefreshToken) {
+        if (accessToken && refreshToken) {
             authAPI.getUserData().then((res) => {
                 if (res) {
                     updateUserStore(true);
@@ -33,7 +31,7 @@ export default function App({ Component, pageProps }: AppProps) {
                 }
             });
         }
-    }, [isAccessToken, isRefreshToken]);
+    }, [accessToken, refreshToken]);
 
     const queryClient = new QueryClient({
         defaultOptions: {
