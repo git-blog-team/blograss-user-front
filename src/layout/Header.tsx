@@ -1,14 +1,17 @@
-import axios from '@/api/middlewares';
-import { BLOGRASS_USER_LOGOUT } from '@/constants/api';
-import { ACCESS_TOKEN, REFRESH_TOKEN } from '@/constants/common';
+// import axios from '@/api/axiosInterceptors';
+// import { BLOGRASS_USER_LOGOUT } from '@/constants/api';
+// import { ACCESS_TOKEN, REFRESH_TOKEN } from '@/constants/common';
 import { useUserStore } from '@/store/userStore';
 import { RowSpaceBetweenCenter } from '@/styles/flexModules';
 import theme from '@/styles/theme';
 import styled from '@emotion/styled';
-import Cookies from 'js-cookie';
+// import Cookies from 'js-cookie';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
+import { authAPI } from '@/api/auth';
+import { removeTokens } from '@/utils/cookie';
+import { BLOGRASS_GITHUB_LOGIN } from '@/constants/api';
 
 export default function Header() {
     const { push } = useRouter();
@@ -35,11 +38,10 @@ export default function Header() {
      * 4. 메인 페이지로 이동
      */
     const onClickLogOut = async () => {
-        await axios
-            .delete(BLOGRASS_USER_LOGOUT)
+        await authAPI
+            .deleteLogOut()
             .then(() => {
-                Cookies.remove(ACCESS_TOKEN);
-                Cookies.remove(REFRESH_TOKEN);
+                removeTokens();
                 updateUserStore(false);
                 push('/');
             })
@@ -60,9 +62,7 @@ export default function Header() {
                         <button onClick={onClickLogOut}>로그아웃</button>
                     </>
                 ) : (
-                    <Link href="https://api.blograss.com:7777/login/github">
-                        로그인
-                    </Link>
+                    <Link href={BLOGRASS_GITHUB_LOGIN}>로그인</Link>
                 )}
             </div>
         </StyledWrapperHeader>
