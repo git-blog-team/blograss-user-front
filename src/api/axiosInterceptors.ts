@@ -1,7 +1,4 @@
-// import { BLOGRASS_TOKEN_REPUBLISH } from '@/constants/api';
-// import { ACCESS_TOKEN, REFRESH_TOKEN } from '@/constants/common';
 import Axios from 'axios';
-// import Cookies from 'js-cookie';
 import { authAPI } from './auth';
 import { getTokens, setTokens } from '@/utils/cookie';
 import { BLOGRASS_BASE_URL } from '@/constants/api';
@@ -18,8 +15,6 @@ axios.interceptors.request.use(
     (conf) => {
         conf.headers = conf.headers ?? {};
         const { accessToken, refreshToken } = getTokens();
-        // const accessToken = Cookies.get(ACCESS_TOKEN);
-        // const refreshToken = Cookies.get(REFRESH_TOKEN);
 
         if (accessToken !== undefined) {
             conf.headers.Authorization = `Bearer ${accessToken}`;

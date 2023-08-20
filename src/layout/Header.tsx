@@ -1,11 +1,7 @@
-// import axios from '@/api/axiosInterceptors';
-// import { BLOGRASS_USER_LOGOUT } from '@/constants/api';
-// import { ACCESS_TOKEN, REFRESH_TOKEN } from '@/constants/common';
 import { useUserStore } from '@/store/userStore';
 import { RowSpaceBetweenCenter } from '@/styles/flexModules';
 import theme from '@/styles/theme';
 import styled from '@emotion/styled';
-// import Cookies from 'js-cookie';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';

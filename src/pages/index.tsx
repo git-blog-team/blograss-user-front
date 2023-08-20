@@ -1,7 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-// import axios from '@/api/axiosInterceptors';
 import ListPageHeader from '@/components/ListPageHeader';
-// import { BLOGRASS_AUTH_GET_TOKEN } from '@/constants/api';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
@@ -12,9 +9,6 @@ export default function Home() {
 
     useEffect(() => {
         if (!query.code) return;
-        // const getGithubAuthToken = async () => {
-        //     return await axios.get(`${BLOGRASS_AUTH_GET_TOKEN}${query.code}`);
-        // };
         authAPI.getGithubAuthToken(query.code).then(() => {
             push('/');
         });
