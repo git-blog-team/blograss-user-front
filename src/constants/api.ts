@@ -1,4 +1,5 @@
 export const BLOGRASS_BASE_URL = 'https://api.blograss.com:7777';
+export const BLOGRASS_GITHUB_LOGIN = `${BLOGRASS_BASE_URL}/login/github`;
 export const BLOGRASS_AUTH_GET_TOKEN = '/auth?code=';
 export const BLOGRASS_GET_USER_DATA = '/auth/user';
 export const BLOGRASS_USER_LOGOUT = '/auth/logout';

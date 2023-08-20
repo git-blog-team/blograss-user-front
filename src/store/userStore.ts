@@ -1,16 +1,5 @@
+import { UserData, UserState } from '@/types/userType';
 import { create } from 'zustand';
-
-interface UserData {
-    userId: string;
-    userName: string;
-    blogUserName: string | null;
-    reportCount: number;
-}
-interface UserState extends UserData {
-    isLogin: boolean;
-    handleLogin: (loginState: boolean) => void;
-    updateUserData: (userData: UserData) => void;
-}
 
 export const useUserStore = create<UserState>((set) => ({
     isLogin: false,

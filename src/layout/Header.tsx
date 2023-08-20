@@ -11,6 +11,7 @@ import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { authAPI } from '@/api/auth';
 import { removeTokens } from '@/utils/cookie';
+import { BLOGRASS_GITHUB_LOGIN } from '@/constants/api';
 
 export default function Header() {
     const { push } = useRouter();
@@ -61,9 +62,7 @@ export default function Header() {
                         <button onClick={onClickLogOut}>로그아웃</button>
                     </>
                 ) : (
-                    <Link href="https://api.blograss.com:7777/login/github">
-                        로그인
-                    </Link>
+                    <Link href={BLOGRASS_GITHUB_LOGIN}>로그인</Link>
                 )}
             </div>
         </StyledWrapperHeader>
