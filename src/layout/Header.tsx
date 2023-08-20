@@ -1,4 +1,4 @@
-import axios from '@/api/middlewares';
+import axios from '@/api/axiosInterceptors';
 import { BLOGRASS_USER_LOGOUT } from '@/constants/api';
 import { ACCESS_TOKEN, REFRESH_TOKEN } from '@/constants/common';
 import { useUserStore } from '@/store/userStore';

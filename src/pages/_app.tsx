@@ -14,7 +14,7 @@ import Cookies from 'js-cookie';
 import { ACCESS_TOKEN, REFRESH_TOKEN } from '@/constants/common';
 import { useUserStore } from '@/store/userStore';
 import { BLOGRASS_GET_USER_DATA } from '@/constants/api';
-import axios from '@/api/middlewares';
+import axios from '@/api/axiosInterceptors';
 import { useEffect } from 'react';
 
 const openSans = Open_Sans({ subsets: ['latin'] });

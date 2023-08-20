@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import axios from '@/api/middlewares';
+import axios from '@/api/axiosInterceptors';
 import ListPageHeader from '@/components/ListPageHeader';
 import { BLOGRASS_AUTH_GET_TOKEN } from '@/constants/api';
 import styled from '@emotion/styled';
