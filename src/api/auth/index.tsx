@@ -10,7 +10,7 @@ export const authAPI = {
     getUserData: async () => {
         return await axios.get(BLOGRASS_GET_USER_DATA);
     },
-    getGithubAuthToken: async (code: string | string[]) => {
+    getAuthToken: async (code: string | string[] | undefined) => {
         return await axios.get(`${BLOGRASS_AUTH_GET_TOKEN}${code}`);
     },
     deleteLogOut: async () => {
