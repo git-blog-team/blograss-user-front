@@ -1,11 +1,13 @@
 // import { BLOGRASS_TOKEN_REPUBLISH } from '@/constants/api';
-import { ACCESS_TOKEN, REFRESH_TOKEN } from '@/constants/common';
+// import { ACCESS_TOKEN, REFRESH_TOKEN } from '@/constants/common';
 import Axios from 'axios';
-import Cookies from 'js-cookie';
+// import Cookies from 'js-cookie';
 import { authAPI } from './auth';
+import { getTokens, setTokens } from '@/utils/cookie';
+import { BLOGRASS_BASE_URL } from '@/constants/api';
 
 const axios = Axios.create({
-    baseURL: 'https://api.blograss.com:7777',
+    baseURL: BLOGRASS_BASE_URL,
     timeout: 10000,
 });
 
@@ -15,8 +17,9 @@ axios.interceptors.request.use(
 
     (conf) => {
         conf.headers = conf.headers ?? {};
-        const accessToken = Cookies.get(ACCESS_TOKEN);
-        const refreshToken = Cookies.get(REFRESH_TOKEN);
+        const { accessToken, refreshToken } = getTokens();
+        // const accessToken = Cookies.get(ACCESS_TOKEN);
+        // const refreshToken = Cookies.get(REFRESH_TOKEN);
 
         if (accessToken !== undefined) {
             conf.headers.Authorization = `Bearer ${accessToken}`;
@@ -48,14 +51,9 @@ axios.interceptors.response.use(
         ) {
             // accessToken 28800 8시간 프론트에서는 6개월로 설정
             // refreshToken 15811200 6개월
-
-            Cookies.set(ACCESS_TOKEN, res.data.result[0].accessToken, {
-                expires: 180,
-                secure: true,
-            });
-            Cookies.set(REFRESH_TOKEN, res.data.result[0].refreshToken, {
-                expires: 180,
-                secure: true,
+            setTokens({
+                accessToken: res.data.result[0].accessToken,
+                refreshToken: res.data.result[0].refreshToken,
             });
         }
         return res;
