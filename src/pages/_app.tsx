@@ -10,7 +10,6 @@ import {
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import Header from '@/layout/Header';
 import { Open_Sans } from 'next/font/google';
-import AuthTokenContext from '@/context/AuthTokenContext';
 import Cookies from 'js-cookie';
 import { ACCESS_TOKEN, REFRESH_TOKEN } from '@/constants/common';
 import { useUserStore } from '@/store/userStore';
@@ -54,12 +53,10 @@ export default function App({ Component, pageProps }: AppProps) {
             <QueryClientProvider client={queryClient}>
                 <Hydrate state={pageProps.dehydratedState}>
                     <Global styles={globalStyles} />
-                    <AuthTokenContext>
-                        <main className={openSans.className}>
-                            <Header />
-                            <Component {...pageProps} />
-                        </main>
-                    </AuthTokenContext>
+                    <main className={openSans.className}>
+                        <Header />
+                        <Component {...pageProps} />
+                    </main>
                 </Hydrate>
                 <ReactQueryDevtools position="bottom-right" />
             </QueryClientProvider>
