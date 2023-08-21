@@ -2,6 +2,7 @@ import {
     BLOGRASS_API_BASE_URL,
     BLOGRASS_CREATE_NEW_POST,
     BLOGRASS_GET_POST_DETAIL,
+    BLOGRASS_GET_POST_LIST,
 } from '@/constants/api';
 import axios from './axiosInterceptors';
 import Axios from 'axios';
@@ -28,6 +29,11 @@ export const postAPI = {
                     RAuthorization: `Bearer ${refreshToken}`,
                 },
             },
+        );
+    },
+    getPostList: async () => {
+        return await axios.get(
+            `${BLOGRASS_GET_POST_LIST}keyword=&page=1&limit=20&sortField=createdAt&sortOrder=DESC`,
         );
     },
 };

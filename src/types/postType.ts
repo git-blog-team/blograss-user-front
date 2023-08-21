@@ -21,3 +21,14 @@ export interface PostDetailParams {
     accessToken: string;
     refreshToken: string;
 }
+
+export interface PostItem {
+    postId: string;
+    title: string;
+    content: string;
+    reportCount: number;
+    user: UserData;
+    images: [];
+    createdAt: string;
+    updatedAt: string;
+}
