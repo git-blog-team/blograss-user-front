@@ -1,20 +1,13 @@
 import {
-    BLOGRASS_BASE_URL,
+    BLOGRASS_API_BASE_URL,
     BLOGRASS_CREATE_NEW_POST,
+    BLOGRASS_DEL_POST,
     BLOGRASS_GET_POST_DETAIL,
+    BLOGRASS_GET_POST_LIST,
 } from '@/constants/api';
 import axios from './axiosInterceptors';
 import Axios from 'axios';
-interface PostNew {
-    title: string;
-    content: string;
-}
-
-interface PostDetailParams {
-    postId: string | string[] | undefined;
-    accessToken: string;
-    refreshToken: string;
-}
+import { PostDetailParams, PostNew } from '@/types/postType';
 
 export const postAPI = {
     postNew: async ({ title, content }: PostNew) => {
@@ -30,7 +23,7 @@ export const postAPI = {
         refreshToken,
     }: PostDetailParams) => {
         return await Axios.get(
-            `${BLOGRASS_BASE_URL}${BLOGRASS_GET_POST_DETAIL}${postId}`,
+            `${BLOGRASS_API_BASE_URL}${BLOGRASS_GET_POST_DETAIL}${postId}`,
             {
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
@@ -38,5 +31,17 @@ export const postAPI = {
                 },
             },
         );
+    },
+    getPostList: async () => {
+        return await axios.get(
+            `${BLOGRASS_GET_POST_LIST}keyword=&page=1&limit=20&sortField=createdAt&sortOrder=DESC`,
+        );
+    },
+    deletePost: async (postId: string) => {
+        return await axios.delete(`${BLOGRASS_DEL_POST}`, {
+            data: {
+                postId,
+            },
+        });
     },
 };
