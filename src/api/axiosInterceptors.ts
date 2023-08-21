@@ -1,10 +1,10 @@
 import Axios from 'axios';
 import { authAPI } from './authAPI';
 import { getTokens, setTokens } from '@/utils/cookie';
-import { BLOGRASS_BASE_URL } from '@/constants/api';
+import { BLOGRASS_API_BASE_URL } from '@/constants/api';
 
 const axios = Axios.create({
-    baseURL: BLOGRASS_BASE_URL,
+    baseURL: BLOGRASS_API_BASE_URL,
     timeout: 10000,
 });
 

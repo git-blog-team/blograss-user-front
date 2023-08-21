@@ -6,6 +6,7 @@ import { useQuery } from '@tanstack/react-query';
 import GridLoader from '@/components/common/GridLoader';
 import theme from '@/styles/theme';
 import { ColumnCenterCenter } from '@/styles/flexModules';
+import PostList from '@/components/home/PostList';
 
 interface IProps {
     query: {
@@ -39,6 +40,7 @@ export default function Home({ query }: IProps) {
             ) : (
                 <StyledSection>
                     <ListPageHeader />
+                    <PostList />
                 </StyledSection>
             )}
         </>
