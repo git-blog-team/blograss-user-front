@@ -8,19 +8,29 @@ import React, { useEffect, useState } from 'react';
 import { authAPI } from '@/api/auth';
 import { removeTokens } from '@/utils/cookie';
 import { BLOGRASS_GITHUB_LOGIN } from '@/constants/api';
+import { useMutation } from '@tanstack/react-query';
 
 export default function Header() {
     const { push } = useRouter();
     const isLogin = useUserStore((state) => state.isLogin);
-    const [isLoginButton, setIsLoginButton] = useState(false);
-    const updateUserStore = useUserStore((state) => state.handleLogin);
-    const { userId, userName } = useUserStore((state) => state);
-
     /**
      * zustand의 스테이트 값을 바로 사용하여 로그인/로그아웃 버튼을 노출 할 경우
      * Error: Hydration failed because the initial UI does not match what was rendered on the server.
      *
      */
+    const [isLoginButton, setIsLoginButton] = useState(false);
+    const updateUserStore = useUserStore((state) => state.handleLogin);
+    const { userId, userName } = useUserStore((state) => state);
+    const { mutate } = useMutation(authAPI.deleteLogOut, {
+        onSuccess() {
+            removeTokens();
+            updateUserStore(false);
+            push('/');
+        },
+        onError(error) {
+            console.error(error);
+        },
+    });
 
     useEffect(() => {
         isLogin ? setIsLoginButton(true) : setIsLoginButton(false);
@@ -34,16 +44,7 @@ export default function Header() {
      * 4. 메인 페이지로 이동
      */
     const onClickLogOut = async () => {
-        await authAPI
-            .deleteLogOut()
-            .then(() => {
-                removeTokens();
-                updateUserStore(false);
-                push('/');
-            })
-            .catch((err) => {
-                console.error(err);
-            });
+        await mutate();
     };
 
     return (
