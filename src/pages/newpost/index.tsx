@@ -1,11 +1,17 @@
 import { postAPI } from '@/api/postAPI';
 import { useMutation } from '@tanstack/react-query';
+import { useRouter } from 'next/router';
 import { FormEvent, useState } from 'react';
 
 export default function NewPost() {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
-    const { mutate } = useMutation(postAPI.postNew);
+    const { push } = useRouter();
+    const { mutate } = useMutation(postAPI.postNew, {
+        onSuccess: ({ data: { result } }) => {
+            push(`/post/${result}`);
+        },
+    });
 
     const onSubmitNewPost = (e: FormEvent) => {
         e.preventDefault();
