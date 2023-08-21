@@ -1,8 +1,10 @@
+import { useUserStore } from '@/store/userStore';
 import { RowSpaceBetweenCenter } from '@/styles/flexModules';
 import theme from '@/styles/theme';
 import styled from '@emotion/styled';
 
 export default function ListPageHeader() {
+    const isLogin = useUserStore((state) => state.isLogin);
     return (
         <StyedWrapper>
             <div>
@@ -14,7 +16,7 @@ export default function ListPageHeader() {
                     <input type="text" />
                     <button>검색</button>
                 </form>
-                <button>새잔디심기</button>
+                {isLogin && <button>새잔디심기</button>}
             </nav>
         </StyedWrapper>
     );
