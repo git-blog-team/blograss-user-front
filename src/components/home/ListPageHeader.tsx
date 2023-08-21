@@ -1,7 +1,9 @@
+import { BLOGRASS_NEW_POST_PAGE } from '@/constants/api';
 import { useUserStore } from '@/store/userStore';
 import { RowSpaceBetweenCenter } from '@/styles/flexModules';
 import theme from '@/styles/theme';
 import styled from '@emotion/styled';
+import Link from 'next/link';
 
 export default function ListPageHeader() {
     const isLogin = useUserStore((state) => state.isLogin);
@@ -16,7 +18,9 @@ export default function ListPageHeader() {
                     <input type="text" />
                     <button>검색</button>
                 </form>
-                {isLogin && <button>새잔디심기</button>}
+                {isLogin && (
+                    <Link href={BLOGRASS_NEW_POST_PAGE}>새잔디심기</Link>
+                )}
             </nav>
         </StyedWrapper>
     );

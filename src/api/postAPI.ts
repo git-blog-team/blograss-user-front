@@ -1,5 +1,5 @@
 import {
-    BLOGRASS_BASE_URL,
+    BLOGRASS_API_BASE_URL,
     BLOGRASS_CREATE_NEW_POST,
     BLOGRASS_GET_POST_DETAIL,
 } from '@/constants/api';
@@ -21,7 +21,7 @@ export const postAPI = {
         refreshToken,
     }: PostDetailParams) => {
         return await Axios.get(
-            `${BLOGRASS_BASE_URL}${BLOGRASS_GET_POST_DETAIL}${postId}`,
+            `${BLOGRASS_API_BASE_URL}${BLOGRASS_GET_POST_DETAIL}${postId}`,
             {
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
