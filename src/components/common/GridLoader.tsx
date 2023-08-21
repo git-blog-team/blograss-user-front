@@ -1,5 +1,5 @@
 import { LoaderSizeMarginProps } from '@/types/loaderType';
-import { cssValue, parseLengthAndUnit } from './unitConverter';
+import { cssValue, parseLengthAndUnit } from '../../utils/unitConverter';
 import { createAnimation } from '@/utils/animation';
 
 const grid = createAnimation(

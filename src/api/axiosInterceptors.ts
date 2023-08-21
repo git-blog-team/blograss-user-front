@@ -1,5 +1,5 @@
 import Axios from 'axios';
-import { authAPI } from './auth';
+import { authAPI } from './authAPI';
 import { getTokens, setTokens } from '@/utils/cookie';
 import { BLOGRASS_BASE_URL } from '@/constants/api';
 

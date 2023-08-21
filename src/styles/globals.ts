@@ -15,6 +15,10 @@ export const globalStyles = () => css`
         background-color: #f5f5f5;
     }
 
+    main {
+        margin-top: 82px;
+    }
+
     a {
         text-decoration: none;
     }

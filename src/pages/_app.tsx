@@ -12,7 +12,7 @@ import Header from '@/layout/Header';
 import { Open_Sans } from 'next/font/google';
 import { useUserStore } from '@/store/userStore';
 import { useEffect } from 'react';
-import { authAPI } from '@/api/auth';
+import { authAPI } from '@/api/authAPI';
 import { getTokens } from '@/utils/cookie';
 
 const openSans = Open_Sans({ subsets: ['latin'] });
