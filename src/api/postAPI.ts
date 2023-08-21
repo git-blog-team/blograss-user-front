@@ -5,16 +5,7 @@ import {
 } from '@/constants/api';
 import axios from './axiosInterceptors';
 import Axios from 'axios';
-interface PostNew {
-    title: string;
-    content: string;
-}
-
-interface PostDetailParams {
-    postId: string | string[] | undefined;
-    accessToken: string;
-    refreshToken: string;
-}
+import { PostDetailParams, PostNew } from '@/types/postType';
 
 export const postAPI = {
     postNew: async ({ title, content }: PostNew) => {
