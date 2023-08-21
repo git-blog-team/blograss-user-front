@@ -4,7 +4,7 @@ import {
     BLOGRASS_TOKEN_REPUBLISH,
     BLOGRASS_USER_LOGOUT,
 } from '@/constants/api';
-import axios from '../axiosInterceptors';
+import axios from './axiosInterceptors';
 
 export const authAPI = {
     getUserData: async () => {

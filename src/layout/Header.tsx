@@ -5,7 +5,7 @@ import styled from '@emotion/styled';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
-import { authAPI } from '@/api/auth';
+import { authAPI } from '@/api/authAPI';
 import { removeTokens } from '@/utils/cookie';
 import { BLOGRASS_GITHUB_LOGIN } from '@/constants/api';
 import { useMutation } from '@tanstack/react-query';

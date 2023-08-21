@@ -1,9 +1,9 @@
-import ListPageHeader from '@/components/ListPageHeader';
+import ListPageHeader from '@/components/home/ListPageHeader';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
-import { authAPI } from '@/api/auth';
+import { authAPI } from '@/api/authAPI';
 import { useQuery } from '@tanstack/react-query';
-import GridLoader from '@/components/GridLoader';
+import GridLoader from '@/components/common/GridLoader';
 import theme from '@/styles/theme';
 import { ColumnCenterCenter } from '@/styles/flexModules';
 
@@ -56,7 +56,6 @@ const StyledWrapperLoader = styled.section`
 const StyledSection = styled.section`
     display: flex;
     flex-direction: column;
-    margin-top: 82px;
     width: 100%;
     background-color: #fff;
 `;
