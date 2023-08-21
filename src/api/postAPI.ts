@@ -1,6 +1,7 @@
 import {
     BLOGRASS_API_BASE_URL,
     BLOGRASS_CREATE_NEW_POST,
+    BLOGRASS_DEL_POST,
     BLOGRASS_GET_POST_DETAIL,
     BLOGRASS_GET_POST_LIST,
 } from '@/constants/api';
@@ -35,5 +36,12 @@ export const postAPI = {
         return await axios.get(
             `${BLOGRASS_GET_POST_LIST}keyword=&page=1&limit=20&sortField=createdAt&sortOrder=DESC`,
         );
+    },
+    deletePost: async (postId: string) => {
+        return await axios.delete(`${BLOGRASS_DEL_POST}`, {
+            data: {
+                postId,
+            },
+        });
     },
 };
