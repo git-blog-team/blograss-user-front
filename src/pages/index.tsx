@@ -35,7 +35,11 @@ export default function Home({ query }: IProps) {
         <>
             {isFetching ? (
                 <StyledWrapperLoader>
-                    <GridLoader size={100} color={theme.colors.point_green} />
+                    <GridLoader
+                        size={100}
+                        color={theme.colors.point_green}
+                        speedMultiplier={0.8}
+                    />
                 </StyledWrapperLoader>
             ) : (
                 <StyledSection>

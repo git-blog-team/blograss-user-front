@@ -17,7 +17,7 @@ export const postAPI = {
             images: [],
         });
     },
-    getPostDetail: async ({
+    getPostDetailServer: async ({
         postId,
         accessToken,
         refreshToken,
