@@ -19,14 +19,13 @@ const openSans = Open_Sans({ subsets: ['latin'] });
 
 export default function App({ Component, pageProps }: AppProps) {
     const { accessToken, refreshToken } = getTokens();
-    const updateUserStore = useUserStore((state) => state.handleLogin);
-    const updateUserData = useUserStore((state) => state.updateUserData);
+    const { handleLogin, updateUserData } = useUserStore((state) => state);
 
     useEffect(() => {
         if (accessToken && refreshToken) {
             authAPI.getUserData().then((res) => {
                 if (res) {
-                    updateUserStore(true);
+                    handleLogin(true);
                     updateUserData(res.data.result[0]);
                 }
             });

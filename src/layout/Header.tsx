@@ -12,19 +12,19 @@ import { useMutation } from '@tanstack/react-query';
 
 export default function Header() {
     const { push } = useRouter();
-    const isLogin = useUserStore((state) => state.isLogin);
+    const { isLogin, handleLogin, userId, userName } = useUserStore(
+        (state) => state,
+    );
     /**
      * zustand의 스테이트 값을 바로 사용하여 로그인/로그아웃 버튼을 노출 할 경우
      * Error: Hydration failed because the initial UI does not match what was rendered on the server.
      *
      */
     const [isLoginButton, setIsLoginButton] = useState(false);
-    const updateUserStore = useUserStore((state) => state.handleLogin);
-    const { userId, userName } = useUserStore((state) => state);
     const { mutate } = useMutation(authAPI.deleteLogOut, {
         onSuccess() {
             removeTokens();
-            updateUserStore(false);
+            handleLogin(false);
             push('/');
         },
         onError(error) {
