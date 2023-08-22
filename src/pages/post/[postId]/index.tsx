@@ -33,7 +33,7 @@ export const getServerSideProps: GetServerSideProps = async ({
 }) => {
     if (req.headers.cookie === undefined) return { props: {} };
     const token = parseTokens(req.headers.cookie);
-    const { data } = await postAPI.getPostDetail({ postId, ...token });
+    const { data } = await postAPI.getPostDetailServer({ postId, ...token });
 
     return {
         props: {

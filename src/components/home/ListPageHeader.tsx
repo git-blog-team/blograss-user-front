@@ -6,7 +6,7 @@ import styled from '@emotion/styled';
 import Link from 'next/link';
 
 export default function ListPageHeader() {
-    const isLogin = useUserStore((state) => state.isLogin);
+    const { isLogin } = useUserStore((state) => state);
     return (
         <StyedWrapper>
             <div>
