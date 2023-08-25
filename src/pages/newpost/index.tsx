@@ -7,6 +7,8 @@ import { FormEvent, useRef, useState } from 'react';
 const PostEditor = dynamic(() => import('@/components/newpost/PostEditor'), {
     ssr: false,
 });
+import { parse } from 'node-html-parser';
+import { ImgesArrayItem } from '@/types/postType';
 
 export default function NewPost() {
     const [title, setTitle] = useState('');
@@ -21,11 +23,21 @@ export default function NewPost() {
     const onSubmitNewPost = (e: FormEvent) => {
         e.preventDefault();
         const markDownContent = editorRef.current?.getInstance().getMarkdown();
-        const content = editorRef.current?.getRootElement();
-        console.log(content);
+        const htmlContent = editorRef.current?.getInstance().getHTML();
+        const imgArray: Array<ImgesArrayItem> = [];
+        if (htmlContent) {
+            const imgHtml = parse(htmlContent).getElementsByTagName('img');
+            imgHtml.forEach((img) => {
+                const regex =
+                    /https:\/\/blograss-bucket\.s3\.ap-northeast-2\.amazonaws\.com\/images\/(.+)/;
+                const imgParse = img.getAttribute('src')?.match(regex);
+                if (imgParse && imgParse[1])
+                    imgArray.push({ url: imgParse[1] });
+            });
+        }
 
         if (markDownContent !== undefined)
-            mutate({ title, content: markDownContent });
+            mutate({ title, content: markDownContent, images: imgArray });
     };
     return (
         <section>
