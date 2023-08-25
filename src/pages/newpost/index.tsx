@@ -7,8 +7,9 @@ import { FormEvent, useRef, useState } from 'react';
 const PostEditor = dynamic(() => import('@/components/newpost/PostEditor'), {
     ssr: false,
 });
-import { parse } from 'node-html-parser';
+// import { parse } from 'node-html-parser';
 import { ImgesArrayItem } from '@/types/postType';
+import { getImageKey } from '@/utils/getImageKey';
 
 export default function NewPost() {
     const [title, setTitle] = useState('');
@@ -24,18 +25,7 @@ export default function NewPost() {
         e.preventDefault();
         const markDownContent = editorRef.current?.getInstance().getMarkdown();
         const htmlContent = editorRef.current?.getInstance().getHTML();
-        const imgArray: Array<ImgesArrayItem> = [];
-        if (htmlContent) {
-            const imgHtml = parse(htmlContent).getElementsByTagName('img');
-            imgHtml.forEach((img) => {
-                const regex =
-                    /https:\/\/blograss-bucket\.s3\.ap-northeast-2\.amazonaws\.com\/images\/(.+)/;
-                const imgParse = img.getAttribute('src')?.match(regex);
-                if (imgParse && imgParse[1])
-                    imgArray.push({ url: imgParse[1] });
-            });
-        }
-
+        const imgArray: Array<ImgesArrayItem> = getImageKey(htmlContent);
         if (markDownContent !== undefined)
             mutate({ title, content: markDownContent, images: imgArray });
     };
