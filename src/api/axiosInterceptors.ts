@@ -36,9 +36,13 @@ axios.interceptors.response.use(
     // response 시 사용될것들
     // 첫번째인자 : response 진행시, 두번째인자 : response 실패시
     (res) => {
+        console.log(res.request.responseURL);
         if (
             res.request.responseURL.includes(
                 'https://api.blograss.com:7777/auth?code=',
+            ) ||
+            res.request.responseURL.includes(
+                'https://api.blograss.com:7878/auth?code=',
             ) ||
             res.request.responseURL.includes(
                 'https://api.blograss.com:7777/auth/tokenrepubilsh',
