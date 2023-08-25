@@ -30,6 +30,7 @@ export default function App({ Component, pageProps }: AppProps) {
                 }
             });
         }
+        console.log(navigator.language);
     }, [accessToken, refreshToken]);
 
     const queryClient = new QueryClient({

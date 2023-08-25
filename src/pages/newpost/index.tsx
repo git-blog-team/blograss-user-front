@@ -1,21 +1,31 @@
 import { postAPI } from '@/api/postAPI';
 import { useMutation } from '@tanstack/react-query';
+import { Editor } from '@toast-ui/react-editor';
+import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
-import { FormEvent, useState } from 'react';
+import { FormEvent, useRef, useState } from 'react';
+const PostEditor = dynamic(() => import('@/components/newpost/PostEditor'), {
+    ssr: false,
+});
 
 export default function NewPost() {
     const [title, setTitle] = useState('');
-    const [content, setContent] = useState('');
     const { push } = useRouter();
     const { mutate } = useMutation(postAPI.postNew, {
         onSuccess: ({ data: { result } }) => {
             push(`/post/${result}`);
         },
     });
+    const editorRef = useRef<Editor>(null);
 
     const onSubmitNewPost = (e: FormEvent) => {
         e.preventDefault();
-        mutate({ title, content });
+        const markDownContent = editorRef.current?.getInstance().getMarkdown();
+        const content = editorRef.current?.getRootElement();
+        console.log(content);
+
+        if (markDownContent !== undefined)
+            mutate({ title, content: markDownContent });
     };
     return (
         <section>
@@ -26,13 +36,9 @@ export default function NewPost() {
                     type="text"
                     id="title"
                     onChange={(e) => setTitle(e.target.value)}
+                    required
                 />
-                <label htmlFor="content">내용</label>
-                <input
-                    type="text"
-                    id="content"
-                    onChange={(e) => setContent(e.target.value)}
-                />
+                <PostEditor editorRef={editorRef} />
             </form>
         </section>
     );
