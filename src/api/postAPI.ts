@@ -10,11 +10,11 @@ import Axios from 'axios';
 import { PostDetailParams, PostNew } from '@/types/postType';
 
 export const postAPI = {
-    postNew: async ({ title, content }: PostNew) => {
+    postNew: async ({ title, content, images }: PostNew) => {
         return await axios.post(BLOGRASS_CREATE_NEW_POST, {
             title,
             content,
-            images: [],
+            images: images,
         });
     },
     getPostDetailServer: async ({

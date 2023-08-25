@@ -1,5 +1,9 @@
 import { UserData } from './userType';
 
+export interface ImgesArrayItem {
+    url: string;
+}
+
 export interface IPostDetailProps {
     postId: string;
     title: string;
@@ -14,6 +18,7 @@ export interface IPostDetailProps {
 export interface PostNew {
     title: string;
     content: string;
+    images: ImgesArrayItem[] | [];
 }
 
 export interface PostDetailParams {

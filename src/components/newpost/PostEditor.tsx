@@ -19,8 +19,7 @@ export default function PostEditor({
             hideModeSwitch={true}
             language="ko-KR"
             hooks={{
-                addImageBlobHook: async (blob, callback) =>
-                    await imageAPI.postUploadImage(blob, callback),
+                addImageBlobHook: imageAPI.postUploadImage,
             }}
         />
     );
