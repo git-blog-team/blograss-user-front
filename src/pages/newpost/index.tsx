@@ -20,9 +20,12 @@ export default function NewPost() {
 
     const onSubmitNewPost = (e: FormEvent) => {
         e.preventDefault();
-        const content = editorRef.current?.getInstance().getMarkdown();
+        const markDownContent = editorRef.current?.getInstance().getMarkdown();
+        const content = editorRef.current?.getRootElement();
+        console.log(content);
 
-        if (content !== undefined) mutate({ title, content });
+        if (markDownContent !== undefined)
+            mutate({ title, content: markDownContent });
     };
     return (
         <section>
