@@ -4,10 +4,11 @@ import {
     BLOGRASS_DEL_POST,
     BLOGRASS_GET_POST_DETAIL,
     BLOGRASS_GET_POST_LIST,
+    BLOGRASS_PUT_POST,
 } from '@/constants/api';
 import axios from './axiosInterceptors';
 import Axios from 'axios';
-import { PostDetailParams, PostNew } from '@/types/postType';
+import { PostDetailParams, PostNew, PostUpdate } from '@/types/postType';
 
 export const postAPI = {
     postNew: async ({ title, content, images }: PostNew) => {
@@ -17,19 +18,9 @@ export const postAPI = {
             images: images,
         });
     },
-    getPostDetailServer: async ({
-        postId,
-        accessToken,
-        refreshToken,
-    }: PostDetailParams) => {
+    getPostDetailServer: async ({ postId }: PostDetailParams) => {
         return await Axios.get(
             `${BLOGRASS_API_BASE_URL}${BLOGRASS_GET_POST_DETAIL}${postId}`,
-            {
-                headers: {
-                    Authorization: `Bearer ${accessToken}`,
-                    RAuthorization: `Bearer ${refreshToken}`,
-                },
-            },
         );
     },
     getPostList: async () => {
@@ -42,6 +33,14 @@ export const postAPI = {
             data: {
                 postId,
             },
+        });
+    },
+    putPostDetail: async ({ postId, title, content, images }: PostUpdate) => {
+        return await axios.put(BLOGRASS_PUT_POST, {
+            postId,
+            title,
+            content,
+            images: images,
         });
     },
 };

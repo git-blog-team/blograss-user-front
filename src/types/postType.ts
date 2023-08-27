@@ -23,8 +23,6 @@ export interface PostNew {
 
 export interface PostDetailParams {
     postId: string | string[] | undefined;
-    accessToken: string;
-    refreshToken: string;
 }
 
 export interface PostItem {
@@ -36,4 +34,8 @@ export interface PostItem {
     images: [];
     createdAt: string;
     updatedAt: string;
+}
+
+export interface PostUpdate extends PostNew {
+    postId: string;
 }
