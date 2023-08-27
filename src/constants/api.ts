@@ -21,6 +21,7 @@ export const BLOGRASS_CREATE_NEW_POST = '/post';
 export const BLOGRASS_GET_POST_DETAIL = '/post?postId=';
 export const BLOGRASS_GET_POST_LIST = '/post/list?';
 export const BLOGRASS_DEL_POST = '/post';
+export const BLOGRASS_PUT_POST = '/post';
 export const BLOGRASS_NEW_POST_PAGE = `${BLOGRASS_BASE_URL}/newpost`;
 export const BLOGRASS_IMAGE_UPLOAD = '/image';
 export const BLOGRASS_IMAGE_BUCKET_URL =
