@@ -4,11 +4,13 @@ import '@toast-ui/editor/dist/i18n/ko-kr';
 import { RefObject } from 'react';
 import { imageAPI } from '@/api/imageAPI';
 import * as DOMPurify from 'dompurify';
-export default function PostEditor({
-    editorRef,
-}: {
+
+interface Iprops {
     editorRef: RefObject<Editor>;
-}) {
+    initialValue?: string;
+}
+
+export default function PostEditor({ editorRef, initialValue }: Iprops) {
     const customSanitizer = DOMPurify.sanitize;
 
     return (
@@ -24,6 +26,7 @@ export default function PostEditor({
                 addImageBlobHook: imageAPI.postUploadImage,
             }}
             customHTMLSanitizer={customSanitizer}
+            initialValue={initialValue}
         />
     );
 }
