@@ -6,7 +6,12 @@ export default function EditorViewer({
 }: {
     initialValue: string;
 }) {
-    const sanitizer = DOMPurify.sanitize;
+    const customSanitizer = DOMPurify.sanitize;
 
-    return <Viewer initialValue={sanitizer(initialValue)} />;
+    return (
+        <Viewer
+            initialValue={initialValue}
+            customHTMLSanitizer={customSanitizer}
+        />
+    );
 }
