@@ -17,6 +17,8 @@ export default function Home() {
 
 const StyledSection = styled.section`
     background-color: #fff;
+    width: 100%;
+    max-width: 1400px;
 `;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {

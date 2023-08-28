@@ -40,3 +40,10 @@ export const RowCenterCenter = () => css`
     justify-content: center;
     align-items: center;
 `;
+
+export const RowFlexStartCenter = () => css`
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+`;
