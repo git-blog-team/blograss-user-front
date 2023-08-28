@@ -21,7 +21,8 @@ export const globalStyles = () => css`
         flex-direction: column;
         align-items: center;
         > section {
-            width: 1400px;
+            max-width: 1400px;
+            width: 100%;
         }
     }
 

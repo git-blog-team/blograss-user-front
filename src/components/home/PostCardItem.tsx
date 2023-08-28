@@ -10,27 +10,32 @@ import {
 import { format } from 'timeago.js';
 import theme from '@/styles/theme';
 
+const blurDataURL =
+    'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mN0OJJcDwAEmwHoBp6SWAAAAABJRU5ErkJggg==';
+
 export default function PostCardItem({ postItem }: { postItem: PostItem }) {
     return (
         <StyledWrapperPostCardItem>
             <StyledPostCardLink
                 href={`${BLOGRASS_BASE_URL}/post/${postItem.postId}`}
             >
-                <StyledWrapperHeader>
-                    <span>
-                        <b>by</b> {postItem.user.userId}
-                    </span>
-                    <span>{format(postItem.createdAt)}</span>
-                </StyledWrapperHeader>
                 {postItem.images[0] && (
                     <Image
                         src={`${BLOGRASS_IMAGE_BUCKET_URL}/${postItem.images[0].url}`}
                         alt={postItem.title}
                         width={320}
                         height={200}
-                        style={{ objectFit: 'cover' }}
+                        style={{ objectFit: 'cover', overflow: 'hidden' }}
+                        placeholder="blur"
+                        blurDataURL={blurDataURL}
                     />
                 )}
+                <StyledWrapperHeader>
+                    <span>
+                        <b>by</b> {postItem.user.userId}
+                    </span>
+                    <span>{format(postItem.createdAt)}</span>
+                </StyledWrapperHeader>
                 <StyledWrapperText>
                     <StyledPostCardItemTitle>
                         {postItem.title}
@@ -54,6 +59,7 @@ const StyledWrapperPostCardItem = styled.article`
 
 const StyledPostCardLink = styled(Link)`
     width: 100%;
+    height: 100%;
 `;
 
 const StyledWrapperHeader = styled.div`
@@ -81,6 +87,10 @@ const StyledPostCardItemTitle = styled.h2`
     font-weight: 700;
     line-height: 1.5rem;
     white-space: normal;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
     color: ${theme.colors.black};
 `;
 
