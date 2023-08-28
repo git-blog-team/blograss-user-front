@@ -2,6 +2,9 @@ import { FormEvent, RefObject } from 'react';
 import { Editor } from '@toast-ui/react-editor';
 import dynamic from 'next/dynamic';
 import { IPostDetailProps } from '@/types/postType';
+import styled from '@emotion/styled';
+import { RowSpaceBetweenCenter } from '@/styles/flexModules';
+import Button from './Button';
 const PostEditor = dynamic(() => import('@/components/newpost/PostEditor'), {
     ssr: false,
 });
@@ -20,22 +23,44 @@ export default function EditorPage({
     data,
 }: Props) {
     return (
-        <section>
+        <WrapperEditor>
             <form onSubmit={onSubmit}>
-                <button type="submit">등록</button>
-                <label htmlFor="title">타이틀</label>
-                <input
-                    type="text"
-                    id="title"
-                    onChange={(e) => setTitle(e.target.value)}
-                    defaultValue={data?.title}
-                    required
-                />
+                <WrapperEditorTitle>
+                    <label htmlFor="title">
+                        <StyledInput
+                            type="text"
+                            id="title"
+                            onChange={(e) => setTitle(e.target.value)}
+                            defaultValue={data?.title}
+                            placeholder="제목"
+                            required
+                        />
+                    </label>
+                    <Button type="submit">등록</Button>
+                </WrapperEditorTitle>
                 <PostEditor
                     editorRef={editorRef}
                     initialValue={data?.content}
                 />
             </form>
-        </section>
+        </WrapperEditor>
     );
 }
+
+const WrapperEditor = styled.section`
+    width: 100%;
+    background-color: #fff;
+`;
+
+const WrapperEditorTitle = styled.div`
+    ${RowSpaceBetweenCenter}
+    width: 100%;
+    padding: 20px;
+`;
+
+const StyledInput = styled.input`
+    width: 100%;
+    border: none;
+    font-size: 2rem;
+    font-weight: bold;
+`;
