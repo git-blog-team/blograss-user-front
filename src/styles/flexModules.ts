@@ -47,3 +47,9 @@ export const RowFlexStartCenter = () => css`
     justify-content: flex-start;
     align-items: center;
 `;
+export const RowFlexEndCenter = () => css`
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+`;

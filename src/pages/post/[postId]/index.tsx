@@ -1,12 +1,15 @@
 import { postAPI } from '@/api/postAPI';
-// import EditorViewer from '@/components/post/EditorViewer';
+import Button from '@/components/common/Button';
 import { useUserStore } from '@/store/userStore';
+import { RowSpaceBetweenCenter } from '@/styles/flexModules';
 import { IPostDetailProps } from '@/types/postType';
+import styled from '@emotion/styled';
 import { useMutation } from '@tanstack/react-query';
 import { GetServerSideProps } from 'next';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { format } from 'timeago.js';
 const EditorViewer = dynamic(() => import('@/components/post/EditorViewer'), {
     ssr: false,
 });
@@ -21,16 +24,29 @@ export default function PostDetail({ data }: { data: IPostDetailProps }) {
 
     const loginUser = useUserStore((state) => state.userId);
     return (
-        <div>
-            {loginUser === data.user.userId && (
-                <Link href={`/editpost/${data.postId}`}>수정</Link>
-            )}
-            {loginUser === data.user.userId && (
-                <button onClick={() => mutate(data.postId)}>삭제</button>
-            )}
-            <h1>{data.title}</h1>
-            <EditorViewer initialValue={data.content} />
-        </div>
+        <section>
+            <StyledWrapperViewer>
+                <h1>{data.title}</h1>
+                <StyledWrapperSubdata>
+                    <span>
+                        by <b>{data.user.userId}</b> {format(data.createdAt)}
+                    </span>
+                    <div>
+                        {loginUser === data.user.userId && (
+                            <Link href={`/editpost/${data.postId}`}>
+                                <Button>수정</Button>
+                            </Link>
+                        )}
+                        {loginUser === data.user.userId && (
+                            <Button onClick={() => mutate(data.postId)}>
+                                삭제
+                            </Button>
+                        )}
+                    </div>
+                </StyledWrapperSubdata>
+                <EditorViewer initialValue={data.content} />
+            </StyledWrapperViewer>
+        </section>
     );
 }
 
@@ -45,3 +61,24 @@ export const getServerSideProps: GetServerSideProps = async ({
         },
     };
 };
+
+const StyledWrapperViewer = styled.div`
+    padding: 40px;
+    background-color: #fff;
+    h1 {
+        font-size: 2rem;
+        font-weight: bold;
+        padding-bottom: 10px;
+    }
+    span {
+        font-size: 1rem;
+        color: #555555;
+        b {
+            font-weight: bold;
+        }
+    }
+`;
+
+const StyledWrapperSubdata = styled.div`
+    ${RowSpaceBetweenCenter}
+`;

@@ -19,12 +19,6 @@ export default function PostCardItem({ postItem }: { postItem: PostItem }) {
             <StyledPostCardLink
                 href={`${BLOGRASS_BASE_URL}/post/${postItem.postId}`}
             >
-                <StyledWrapperHeader>
-                    <span>
-                        <b>by</b> {postItem.user.userId}
-                    </span>
-                    <span>{format(postItem.createdAt)}</span>
-                </StyledWrapperHeader>
                 {postItem.images[0] && (
                     <Image
                         src={`${BLOGRASS_IMAGE_BUCKET_URL}/${postItem.images[0].url}`}
@@ -36,6 +30,12 @@ export default function PostCardItem({ postItem }: { postItem: PostItem }) {
                         blurDataURL={blurDataURL}
                     />
                 )}
+                <StyledWrapperHeader>
+                    <span>
+                        <b>by</b> {postItem.user.userId}
+                    </span>
+                    <span>{format(postItem.createdAt)}</span>
+                </StyledWrapperHeader>
                 <StyledWrapperText>
                     <StyledPostCardItemTitle>
                         {postItem.title}
@@ -59,6 +59,7 @@ const StyledWrapperPostCardItem = styled.article`
 
 const StyledPostCardLink = styled(Link)`
     width: 100%;
+    height: 100%;
 `;
 
 const StyledWrapperHeader = styled.div`

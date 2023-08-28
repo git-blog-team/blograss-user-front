@@ -1,9 +1,10 @@
 import { BLOGRASS_NEW_POST_PAGE } from '@/constants/api';
 import { useUserStore } from '@/store/userStore';
-import { RowSpaceBetweenCenter } from '@/styles/flexModules';
+import { RowFlexEndCenter, RowSpaceBetweenCenter } from '@/styles/flexModules';
 import theme from '@/styles/theme';
 import styled from '@emotion/styled';
 import Link from 'next/link';
+import Button from '../common/Button';
 
 export default function ListPageHeader() {
     const { isLogin } = useUserStore((state) => state);
@@ -13,15 +14,17 @@ export default function ListPageHeader() {
                 <StyledPostCountLabel>나의 게시물</StyledPostCountLabel>
                 <StyledPostCountText>122</StyledPostCountText>
             </div>
-            <nav>
+            <StyledWrapperNav>
                 <form action="">
                     <input type="text" />
-                    <button>검색</button>
+                    <Button>검색</Button>
                 </form>
                 {isLogin && (
-                    <Link href={BLOGRASS_NEW_POST_PAGE}>새잔디심기</Link>
+                    <Link href={BLOGRASS_NEW_POST_PAGE}>
+                        <Button>새 잔디심기</Button>
+                    </Link>
                 )}
-            </nav>
+            </StyledWrapperNav>
         </StyedWrapper>
     );
 }
@@ -44,4 +47,8 @@ const StyledPostCountText = styled.span`
     font-size: 14px;
     font-weight: 400;
     color: #7b7fa8;
+`;
+
+const StyledWrapperNav = styled.nav`
+    ${RowFlexEndCenter}
 `;
