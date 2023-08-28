@@ -51,7 +51,7 @@ export default function Header() {
         <StyledWrapperHeader>
             <StyledInnerWrapper>
                 <Link href="/">
-                    <Image src="/logo.png" alt="logo" width={24} height={24} />
+                    <Image src="/logo.png" alt="logo" width={30} height={30} />
                     <span>Blograss</span>
                 </Link>
                 <div>
@@ -93,8 +93,9 @@ const StyledInnerWrapper = styled.div`
         }
 
         > span {
-            color: ${theme.colors.black};
-            font-size: 1.5rem;
+            color: ${theme.colors.point_yellow_green2};
+            font-size: 3rem;
+            font-weight: 700;
         }
     }
 `;
