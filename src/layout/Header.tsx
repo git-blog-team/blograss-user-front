@@ -10,6 +10,7 @@ import { removeTokens } from '@/utils/cookie';
 import { BLOGRASS_GITHUB_LOGIN } from '@/constants/api';
 import { useMutation } from '@tanstack/react-query';
 import Image from 'next/image';
+import Button from '@/components/common/Button';
 
 export default function Header() {
     const { push } = useRouter();
@@ -56,11 +57,13 @@ export default function Header() {
                 <div>
                     {isLoginButton ? (
                         <>
-                            {userId}
-                            <button onClick={onClickLogOut}>로그아웃</button>
+                            <StyledUserName>{userId}님</StyledUserName>
+                            <Button onClick={onClickLogOut}>로그아웃</Button>
                         </>
                     ) : (
-                        <Link href={BLOGRASS_GITHUB_LOGIN}>로그인</Link>
+                        <Link href={BLOGRASS_GITHUB_LOGIN}>
+                            <Button>로그인</Button>
+                        </Link>
                     )}
                 </div>
             </StyledInnerWrapper>
@@ -94,4 +97,10 @@ const StyledInnerWrapper = styled.div`
             font-size: 1.5rem;
         }
     }
+`;
+
+const StyledUserName = styled.span`
+    font-size: 1rem;
+    color: ${theme.colors.black};
+    margin-right: 4px;
 `;
