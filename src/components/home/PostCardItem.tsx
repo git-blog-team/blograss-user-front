@@ -7,6 +7,8 @@ import {
     ColumnFlexStartFlexStart,
     RowSpaceBetweenCenter,
 } from '@/styles/flexModules';
+import { format } from 'timeago.js';
+import theme from '@/styles/theme';
 
 export default function PostCardItem({ postItem }: { postItem: PostItem }) {
     return (
@@ -15,8 +17,10 @@ export default function PostCardItem({ postItem }: { postItem: PostItem }) {
                 href={`${BLOGRASS_BASE_URL}/post/${postItem.postId}`}
             >
                 <StyledWrapperHeader>
-                    <span>by {postItem.user.userId}</span>
-                    <span>{postItem.createdAt}</span>
+                    <span>
+                        <b>by</b> {postItem.user.userId}
+                    </span>
+                    <span>{format(postItem.createdAt)}</span>
                 </StyledWrapperHeader>
                 {postItem.images[0] && (
                     <Image
@@ -58,6 +62,10 @@ const StyledWrapperHeader = styled.div`
     padding: 10px;
     span {
         color: #555555;
+        font-size: 0.8rem;
+        b {
+            font-weight: 700;
+        }
     }
 `;
 
@@ -73,6 +81,7 @@ const StyledPostCardItemTitle = styled.h2`
     font-weight: 700;
     line-height: 1.5rem;
     white-space: normal;
+    color: ${theme.colors.black};
 `;
 
 const StyledPostCardItemContent = styled.p`
