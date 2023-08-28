@@ -1,5 +1,5 @@
 import { useUserStore } from '@/store/userStore';
-import { RowSpaceBetweenCenter } from '@/styles/flexModules';
+import { RowCenterCenter, RowSpaceBetweenCenter } from '@/styles/flexModules';
 import theme from '@/styles/theme';
 import styled from '@emotion/styled';
 import Link from 'next/link';
@@ -9,12 +9,11 @@ import { authAPI } from '@/api/authAPI';
 import { removeTokens } from '@/utils/cookie';
 import { BLOGRASS_GITHUB_LOGIN } from '@/constants/api';
 import { useMutation } from '@tanstack/react-query';
+import Image from 'next/image';
 
 export default function Header() {
     const { push } = useRouter();
-    const { isLogin, handleLogin, userId, userName } = useUserStore(
-        (state) => state,
-    );
+    const { isLogin, handleLogin, userId } = useUserStore((state) => state);
     /**
      * zustand의 스테이트 값을 바로 사용하여 로그인/로그아웃 버튼을 노출 할 경우
      * Error: Hydration failed because the initial UI does not match what was rendered on the server.
@@ -49,29 +48,50 @@ export default function Header() {
 
     return (
         <StyledWrapperHeader>
-            <div>
-                <Link href="/">LOGO</Link>
-            </div>
-            <div>
-                {isLoginButton ? (
-                    <>
-                        {userId} {userName}
-                        <button onClick={onClickLogOut}>로그아웃</button>
-                    </>
-                ) : (
-                    <Link href={BLOGRASS_GITHUB_LOGIN}>로그인</Link>
-                )}
-            </div>
+            <StyledInnerWrapper>
+                <Link href="/">
+                    <Image src="/logo.png" alt="logo" width={24} height={24} />
+                    <span>Blograss</span>
+                </Link>
+                <div>
+                    {isLoginButton ? (
+                        <>
+                            {userId}
+                            <button onClick={onClickLogOut}>로그아웃</button>
+                        </>
+                    ) : (
+                        <Link href={BLOGRASS_GITHUB_LOGIN}>로그인</Link>
+                    )}
+                </div>
+            </StyledInnerWrapper>
         </StyledWrapperHeader>
     );
 }
 
 const StyledWrapperHeader = styled.header`
-    ${RowSpaceBetweenCenter}
+    ${RowCenterCenter}
     width: 100%;
     height: 62px;
     background-color: ${theme.colors.white};
     box-shadow: 0px 2px 4px 0px #dadfef;
     position: fixed;
     top: 0;
+`;
+
+const StyledInnerWrapper = styled.div`
+    ${RowSpaceBetweenCenter}
+    width: 100%;
+    max-width: 1400px;
+    > a {
+        ${RowSpaceBetweenCenter}
+
+        > img {
+            margin-right: 4px;
+        }
+
+        > span {
+            color: ${theme.colors.black};
+            font-size: 1.5rem;
+        }
+    }
 `;

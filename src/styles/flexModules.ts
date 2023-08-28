@@ -33,3 +33,10 @@ export const RowSpaceBetweenCenter = () => css`
     justify-content: space-between;
     align-items: center;
 `;
+
+export const RowCenterCenter = () => css`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+`;
