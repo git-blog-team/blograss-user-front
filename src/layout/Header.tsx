@@ -68,12 +68,14 @@ const StyledWrapperHeader = styled.header`
     box-shadow: 0px 2px 4px 0px #dadfef;
     position: fixed;
     top: 0;
+    z-index: 10;
 `;
 
 const StyledInnerWrapper = styled.div`
     ${RowSpaceBetweenCenter}
     width: 100%;
     max-width: 1400px;
+
     > a {
         ${RowSpaceBetweenCenter}
 

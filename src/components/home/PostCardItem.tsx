@@ -10,6 +10,9 @@ import {
 import { format } from 'timeago.js';
 import theme from '@/styles/theme';
 
+const blurDataURL =
+    'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mN0OJJcDwAEmwHoBp6SWAAAAABJRU5ErkJggg==';
+
 export default function PostCardItem({ postItem }: { postItem: PostItem }) {
     return (
         <StyledWrapperPostCardItem>
@@ -28,7 +31,9 @@ export default function PostCardItem({ postItem }: { postItem: PostItem }) {
                         alt={postItem.title}
                         width={320}
                         height={200}
-                        style={{ objectFit: 'cover' }}
+                        style={{ objectFit: 'cover', overflow: 'hidden' }}
+                        placeholder="blur"
+                        blurDataURL={blurDataURL}
                     />
                 )}
                 <StyledWrapperText>
@@ -81,6 +86,10 @@ const StyledPostCardItemTitle = styled.h2`
     font-weight: 700;
     line-height: 1.5rem;
     white-space: normal;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
     color: ${theme.colors.black};
 `;
 
