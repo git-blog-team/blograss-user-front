@@ -23,7 +23,6 @@ export default function EditPost({ data }: { data: IPostDetailProps }) {
         const markDownContent = editorRef.current?.getInstance().getMarkdown();
         const htmlContent = editorRef.current?.getInstance().getHTML();
         const imgArray: Array<ImgesArrayItem> = getImageKey(htmlContent);
-        console.log(title, markDownContent, imgArray);
         if (markDownContent !== undefined)
             mutate({
                 postId: data.postId,

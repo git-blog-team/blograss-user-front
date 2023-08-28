@@ -17,6 +17,12 @@ export const globalStyles = () => css`
 
     main {
         margin-top: 82px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        > section {
+            width: 1400px;
+        }
     }
 
     a {
