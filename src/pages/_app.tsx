@@ -14,12 +14,15 @@ import { useUserStore } from '@/store/userStore';
 import { useEffect } from 'react';
 import { authAPI } from '@/api/authAPI';
 import { getTokens } from '@/utils/cookie';
+import PageLoader from '@/components/common/PageLoader';
+import { useCommonStore } from '@/store/commonStore';
 
 const openSans = Open_Sans({ subsets: ['latin'] });
 
 export default function App({ Component, pageProps }: AppProps) {
     const { accessToken, refreshToken } = getTokens();
     const { handleLogin, updateUserData } = useUserStore((state) => state);
+    const { isLoading } = useCommonStore((state) => state);
 
     useEffect(() => {
         if (accessToken && refreshToken) {
@@ -48,6 +51,7 @@ export default function App({ Component, pageProps }: AppProps) {
                     <main className={openSans.className}>
                         <Header />
                         <Component {...pageProps} />
+                        {isLoading && <PageLoader />}
                     </main>
                 </Hydrate>
                 <ReactQueryDevtools position="bottom-right" />
