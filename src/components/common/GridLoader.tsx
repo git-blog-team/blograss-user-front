@@ -1,6 +1,7 @@
 import { LoaderSizeMarginProps } from '@/types/loaderType';
 import { cssValue, parseLengthAndUnit } from '../../utils/unitConverter';
 import { createAnimation } from '@/utils/animation';
+import theme from '@/styles/theme';
 
 const grid = createAnimation(
     'GridLoader',
@@ -12,7 +13,7 @@ const random = (top: number): number => Math.random() * top;
 
 function GridLoader({
     loading = true,
-    color = '#000000',
+    color = theme.colors.point_green,
     speedMultiplier = 1,
     cssOverride = {},
     size = 15,
