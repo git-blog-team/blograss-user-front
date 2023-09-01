@@ -45,7 +45,7 @@ export default function CommentItem(props: {
 
             setIsEdit((prev) => !prev);
             setCommentContent(content);
-        } catch (e: Error | any) {
+        } catch (e: Error | unknown) {
             console.log(e);
         }
     };
@@ -59,7 +59,7 @@ export default function CommentItem(props: {
             await deleteComment({ commentId });
             refetchComment();
             alert('삭제되었습니다.');
-        } catch (e: Error | any) {
+        } catch (e: Error | unknown) {
             console.log(e);
         }
     };
@@ -68,7 +68,7 @@ export default function CommentItem(props: {
         try {
             await editComment({ commentId, content: commentContent });
             alert('댓글이 수정되었습니다.');
-        } catch (e: Error | any) {
+        } catch (e: Error | unknown) {
             console.log(e);
         } finally {
             setIsEdit(false);

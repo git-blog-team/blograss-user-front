@@ -10,7 +10,7 @@ import { AxiosResponse } from 'axios';
 
 export const commentAPI = {
     getCommentList: async (
-        params: Record<string, any>,
+        params: Record<string, unknown>,
     ): Promise<CommentListData> => {
         const { data }: AxiosResponse = await axios.get(
             `${BLOGRASS_COMMENT}?${qs.stringify(
