@@ -7,8 +7,13 @@ import {
     BLOGRASS_PUT_POST,
 } from '@/constants/api';
 import axios from './axiosInterceptors';
-import Axios from 'axios';
-import { PostDetailParams, PostNew, PostUpdate } from '@/types/postType';
+import Axios, { AxiosResponse } from 'axios';
+import {
+    PostDetailParams,
+    PostItem,
+    PostNew,
+    PostUpdate,
+} from '@/types/postType';
 
 export const postAPI = {
     postNew: async ({ title, content, images }: PostNew) => {
@@ -27,6 +32,16 @@ export const postAPI = {
         return await axios.get(
             `${BLOGRASS_GET_POST_LIST}keyword=&page=1&limit=20&sortField=createdAt&sortOrder=DESC`,
         );
+    },
+    getPostDetail: async ({
+        postId,
+    }: {
+        postId: string;
+    }): Promise<PostItem> => {
+        const { data }: AxiosResponse = await axios.get(
+            `${BLOGRASS_API_BASE_URL}${BLOGRASS_GET_POST_DETAIL}${postId}`,
+        );
+        return data.result[0];
     },
     deletePost: async (postId: string) => {
         return await axios.delete(`${BLOGRASS_DEL_POST}`, {
