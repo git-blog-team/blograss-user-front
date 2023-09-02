@@ -3,9 +3,8 @@ import { useMutation } from '@tanstack/react-query';
 import { Editor } from '@toast-ui/react-editor';
 import { useRouter } from 'next/router';
 import { FormEvent, RefObject, useRef, useState } from 'react';
-import { ImgesArrayItem } from '@/types/postType';
-import { getImageKey } from '@/utils/getImageKey';
 import EditorPage from '@/components/common/EditorPage';
+import { getContentFromRef } from '@/utils/getContentFromRef';
 
 export default function NewPost() {
     const [title, setTitle] = useState('');
@@ -19,9 +18,7 @@ export default function NewPost() {
 
     const onSubmitNewPost = (e: FormEvent) => {
         e.preventDefault();
-        const markDownContent = editorRef.current?.getInstance().getMarkdown();
-        const htmlContent = editorRef.current?.getInstance().getHTML();
-        const imgArray: Array<ImgesArrayItem> = getImageKey(htmlContent);
+        const { markDownContent, imgArray } = getContentFromRef(editorRef);
         if (markDownContent !== undefined)
             mutate({ title, content: markDownContent, images: imgArray });
     };
