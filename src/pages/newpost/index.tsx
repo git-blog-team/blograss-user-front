@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import { FormEvent, RefObject, useRef, useState } from 'react';
 import EditorPage from '@/components/common/EditorPage';
 import { getContentFromRef } from '@/utils/getContentFromRef';
+import { GetServerSideProps } from 'next';
 
 export default function NewPost() {
     const [title, setTitle] = useState('');
@@ -30,3 +31,25 @@ export default function NewPost() {
         />
     );
 }
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+    const cookies = context.req.headers.cookie;
+
+    if (!cookies) {
+        /**
+         * 일단은 쿠키 여부로 권한 분기 처리,
+         * 추후 로그인 페이지등으로 이동시켜서 로그인하도록 유도처리
+         */
+        return {
+            redirect: {
+                destination: '/',
+                permanent: false,
+            },
+            props: {},
+        };
+    }
+
+    return {
+        props: {},
+    };
+};
