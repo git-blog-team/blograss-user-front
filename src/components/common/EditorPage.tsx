@@ -1,7 +1,5 @@
-import { FormEvent, RefObject } from 'react';
-import { Editor } from '@toast-ui/react-editor';
 import dynamic from 'next/dynamic';
-import { IPostDetailProps } from '@/types/postType';
+import { IPropsEditorPage } from '@/types/postType';
 import styled from '@emotion/styled';
 import { RowSpaceBetweenCenter } from '@/styles/flexModules';
 import Button from './Button';
@@ -9,19 +7,12 @@ const PostEditor = dynamic(() => import('@/components/newpost/PostEditor'), {
     ssr: false,
 });
 
-interface Props {
-    onSubmit: (e: FormEvent) => void;
-    setTitle: (title: string) => void;
-    editorRef: RefObject<Editor>;
-    data?: IPostDetailProps;
-}
-
 export default function EditorPage({
     onSubmit,
     setTitle,
     editorRef,
     data,
-}: Props) {
+}: IPropsEditorPage) {
     return (
         <WrapperEditor>
             <form onSubmit={onSubmit}>

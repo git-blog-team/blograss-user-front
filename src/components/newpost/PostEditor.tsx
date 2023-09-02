@@ -1,16 +1,14 @@
 import { Editor } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
 import '@toast-ui/editor/dist/i18n/ko-kr';
-import { RefObject } from 'react';
 import { imageAPI } from '@/api/imageAPI';
 import * as DOMPurify from 'dompurify';
+import { IPropsPostEditor } from '@/types/postType';
 
-interface Iprops {
-    editorRef: RefObject<Editor>;
-    initialValue?: string;
-}
-
-export default function PostEditor({ editorRef, initialValue }: Iprops) {
+export default function PostEditor({
+    editorRef,
+    initialValue,
+}: IPropsPostEditor) {
     const customSanitizer = DOMPurify.sanitize;
 
     return (
