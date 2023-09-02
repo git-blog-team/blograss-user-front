@@ -1,7 +1,7 @@
 import { postAPI } from '@/api/postAPI';
 import EditorPage from '@/components/common/EditorPage';
-import { IPostDetailProps, ImgesArrayItem } from '@/types/postType';
-import { getImageKey } from '@/utils/getImageKey';
+import { IPostDetailProps } from '@/types/postType';
+import { getContentFromRef } from '@/utils/getContentFromRef';
 import { useMutation } from '@tanstack/react-query';
 import { Editor } from '@toast-ui/react-editor';
 import { GetServerSideProps } from 'next';
@@ -20,9 +20,7 @@ export default function EditPost({ data }: { data: IPostDetailProps }) {
 
     const onSubmitEditPost = (e: FormEvent) => {
         e.preventDefault();
-        const markDownContent = editorRef.current?.getInstance().getMarkdown();
-        const htmlContent = editorRef.current?.getInstance().getHTML();
-        const imgArray: Array<ImgesArrayItem> = getImageKey(htmlContent);
+        const { markDownContent, imgArray } = getContentFromRef(editorRef);
         if (markDownContent !== undefined)
             mutate({
                 postId: data.postId,
