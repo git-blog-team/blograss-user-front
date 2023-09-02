@@ -41,7 +41,24 @@ export default function EditPost({ data }: { data: IPostDetailProps }) {
 
 export const getServerSideProps: GetServerSideProps = async ({
     query: { postId },
+    req,
 }) => {
+    const cookies = req.headers.cookie;
+
+    if (!cookies) {
+        /**
+         * 일단은 쿠키 여부로 권한 분기 처리,
+         * 추후 로그인 페이지등으로 이동시켜서 로그인하도록 유도처리
+         */
+        return {
+            redirect: {
+                destination: '/',
+                permanent: false,
+            },
+            props: {},
+        };
+    }
+
     const { data } = await postAPI.getPostDetailServer({ postId });
 
     return {
