@@ -1,76 +1,118 @@
 import { BLOGRASS_BASE_URL, BLOGRASS_IMAGE_BUCKET_URL } from '@/constants/api';
 import { PostItem } from '@/types/postType';
-import Link from 'next/link';
 import Image from 'next/image';
 import styled from '@emotion/styled';
 import {
+    ColumnFlexStartCenter,
     ColumnFlexStartFlexStart,
-    RowSpaceBetweenCenter,
+    RowCenterCenter,
 } from '@/styles/flexModules';
 import { format } from 'timeago.js';
 import theme from '@/styles/theme';
+import { useRouter } from 'next/router';
 
 const blurDataURL =
     'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mN0OJJcDwAEmwHoBp6SWAAAAABJRU5ErkJggg==';
 
 export default function PostCardItem({ postItem }: { postItem: PostItem }) {
+    const router = useRouter();
+    const onClickAAA = () => {
+        router.push(
+            {
+                pathname: `${BLOGRASS_BASE_URL}/post/${postItem.postId}`,
+                query: {
+                    kim: 'kim',
+                },
+            },
+            undefined,
+            { shallow: true },
+        );
+    };
     return (
         <StyledWrapperPostCardItem>
-            <StyledPostCardLink
-                href={`${BLOGRASS_BASE_URL}/post/${postItem.postId}`}
-            >
-                {postItem.images[0] && (
-                    <Image
-                        src={`${BLOGRASS_IMAGE_BUCKET_URL}/${postItem.images[0].url}`}
-                        alt={postItem.title}
-                        width={320}
-                        height={200}
-                        style={{ objectFit: 'cover', overflow: 'hidden' }}
-                        placeholder="blur"
-                        blurDataURL={blurDataURL}
-                    />
-                )}
-                <StyledWrapperHeader>
-                    <span>
-                        <b>by</b> {postItem.user.userId}
-                    </span>
-                    <span>{format(postItem.createdAt)}</span>
-                </StyledWrapperHeader>
+            <button onClick={onClickAAA}>
+                <h1>{postItem.title}</h1>
+                <span>
+                    {postItem.user.userName} | {postItem.user.userId}
+                    <br /> {format(postItem.createdAt)}
+                </span>
+                <div>
+                    {postItem.images[0] ? (
+                        <Image
+                            src={`${BLOGRASS_IMAGE_BUCKET_URL}/${postItem.images[0].url}`}
+                            alt={postItem.title}
+                            width={280}
+                            height={150}
+                            style={{ objectFit: 'cover', overflow: 'hidden' }}
+                            placeholder="blur"
+                            blurDataURL={blurDataURL}
+                        />
+                    ) : (
+                        <Image
+                            src="/logo.png"
+                            alt="logo"
+                            width={80}
+                            height={80}
+                        />
+                    )}
+                </div>
+
                 <StyledWrapperText>
-                    <StyledPostCardItemTitle>
-                        {postItem.title}
-                    </StyledPostCardItemTitle>
                     <StyledPostCardItemContent>
                         {postItem.content}
                     </StyledPostCardItemContent>
                 </StyledWrapperText>
-            </StyledPostCardLink>
+            </button>
         </StyledWrapperPostCardItem>
     );
 }
 
 const StyledWrapperPostCardItem = styled.article`
-    ${ColumnFlexStartFlexStart}
-    width: 320px;
+    width: 30rem;
     height: 400px;
-    border-radius: 10px;
+    border-radius: 0.8rem;
     box-shadow: 0px 2px 4px 0px #bfc4d4;
-`;
+    &:hover {
+        box-shadow: 0px 2px 4px 0px #a0ab9c;
+    }
 
-const StyledPostCardLink = styled(Link)`
-    width: 100%;
-    height: 100%;
-`;
+    > button {
+        ${ColumnFlexStartCenter}
+        width: 100%;
+        height: 100%;
+        background-color: white;
+        border: unset;
+        border-radius: 0.8rem;
+        cursor: pointer;
+        padding: 3rem 2rem;
 
-const StyledWrapperHeader = styled.div`
-    ${RowSpaceBetweenCenter}
-    width: 100%;
-    padding: 10px;
-    span {
-        color: #555555;
-        font-size: 0.8rem;
-        b {
+        > h1 {
+            width: 100%;
+            font-size: 1.8rem;
             font-weight: 700;
+            line-height: 1.5rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            text-align: left;
+            color: ${theme.colors.black};
+            margin: 0 0 1.5rem 0;
+        }
+        > span {
+            width: 100%;
+            font-size: 1.3rem;
+            text-align: left;
+            color: gray;
+            margin: 0.8rem 0;
+        }
+
+        > div {
+            &:first-of-type {
+                ${RowCenterCenter}
+                width: 100%;
+                height: 18rem;
+                background-color: #eff9ef;
+            }
         }
     }
 `;
@@ -79,19 +121,6 @@ const StyledWrapperText = styled.div`
     ${ColumnFlexStartFlexStart}
     width: 100%;
     padding: 10px;
-`;
-
-const StyledPostCardItemTitle = styled.h2`
-    width: 100%;
-    font-size: 1rem;
-    font-weight: 700;
-    line-height: 1.5rem;
-    white-space: normal;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    color: ${theme.colors.black};
 `;
 
 const StyledPostCardItemContent = styled.p`

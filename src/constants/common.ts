@@ -13,3 +13,4 @@ export const DEBOUNCE_TIME = 500;
 export const PENDING = 'PENDING';
 export const DENY = 'DENY';
 export const APPROVAL = 'APPROVAL';
+export const REACT_MODAL_CONTENT = 'react_modal_content';

@@ -30,3 +30,13 @@ export interface IPropsStyledButton {
     };
     disabled?: boolean;
 }
+
+interface OptionTypeBase {
+    [key: string]: any;
+}
+
+type OptionsType<OptionType extends OptionTypeBase> = ReadonlyArray<OptionType>;
+export type ValueType<
+    OptionType extends OptionTypeBase,
+    IsMulti extends boolean,
+> = IsMulti extends true ? OptionsType<OptionType> : OptionType | null;

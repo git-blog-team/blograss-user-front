@@ -10,19 +10,27 @@ import {
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import Header from '@/layout/Header';
 import { Open_Sans } from 'next/font/google';
-import { useUserStore } from '@/store/userStore';
+
 import { useEffect } from 'react';
 import { authAPI } from '@/api/authAPI';
 import { getTokens } from '@/utils/cookie';
 import PageLoader from '@/components/common/PageLoader';
-import { useCommonStore } from '@/store/commonStore';
+import { useAlertStore, useCommonStore, useToast, useUserStore } from '@/store';
+import Alert from '@/components/common/modal/Alert';
 
 const openSans = Open_Sans({ subsets: ['latin'] });
 
 export default function App({ Component, pageProps }: AppProps) {
     const { accessToken, refreshToken } = getTokens();
-    const { handleLogin, updateUserData } = useUserStore((state) => state);
-    const { isLoading } = useCommonStore((state) => state);
+    const { handleLogin, updateUserData } = useUserStore();
+    const { isLoading } = useCommonStore();
+    const { toastMessage } = useCommonStore();
+    const { openToast, ToastComponent } = useToast(toastMessage);
+    const { alertData } = useAlertStore();
+
+    useEffect(() => {
+        openToast();
+    }, [toastMessage]);
 
     useEffect(() => {
         if (accessToken && refreshToken) {
@@ -53,6 +61,8 @@ export default function App({ Component, pageProps }: AppProps) {
                         <Component {...pageProps} />
                         {isLoading && <PageLoader />}
                     </main>
+                    {alertData.message && <Alert />}
+                    {toastMessage && <ToastComponent />}
                 </Hydrate>
                 <ReactQueryDevtools position="bottom-right" />
             </QueryClientProvider>
