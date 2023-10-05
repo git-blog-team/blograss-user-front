@@ -16,6 +16,7 @@
         "quotes": ["error", "single"],
         "semi": ["error", "always"],
         "react/react-in-jsx-scope": "off",
-        "no-console": ["warn", { "allow": ["warn", "error"] }]
+        "no-console": ["warn", { "allow": ["warn", "error"] }],
+        "@typescript-eslint/no-explicit-any": "off"
     }
 }

@@ -1,7 +1,8 @@
 import { postAPI } from '@/api/postAPI';
 import Button from '@/components/common/Button';
 import Comment from '@/parts/post/comment/Comment';
-import { useUserStore } from '@/store/userStore';
+import { useUserStore } from '@/store';
+
 import { RowSpaceBetweenCenter } from '@/styles/flexModules';
 import { IPostDetailProps } from '@/types/postType';
 import styled from '@emotion/styled';
@@ -17,6 +18,8 @@ const EditorViewer = dynamic(() => import('@/components/post/EditorViewer'), {
 });
 
 export default function PostDetail({ data }: { data: IPostDetailProps }) {
+    const USER_STORE = useUserStore();
+    const { userId: loginUser } = USER_STORE;
     const { push } = useRouter();
 
     const { mutate } = useMutation(postAPI.deletePost, {
@@ -25,7 +28,6 @@ export default function PostDetail({ data }: { data: IPostDetailProps }) {
         },
     });
 
-    const loginUser = useUserStore((state) => state.userId);
     return (
         <section>
             <StyledWrapperViewer>
