@@ -7,6 +7,7 @@ import { authAPI } from '@/api/authAPI';
 export default function Home() {
     return (
         <>
+            <StyledBanner />
             <StyledSection>
                 <ListPageHeader />
                 <PostList />
@@ -16,9 +17,14 @@ export default function Home() {
 }
 
 const StyledSection = styled.section`
-    background-color: #fff;
     width: 100%;
     max-width: 1400px;
+    padding: 0 2rem;
+`;
+const StyledBanner = styled.div`
+    background-color: #b9d7b9;
+    width: 100%;
+    height: 10rem;
 `;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {

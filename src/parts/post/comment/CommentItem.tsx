@@ -1,5 +1,6 @@
 import { commentAPI } from '@/api/commentAPI';
-import { useUserStore } from '@/store/userStore';
+import { useUserStore } from '@/store';
+
 import {
     ColumnFlexStartFlexStart,
     RowSpaceBetweenCenter,
@@ -22,7 +23,7 @@ export default function CommentItem(props: {
 }) {
     const { data, refetchComment } = props;
     const { content, user, commentId } = data;
-    const { userId } = useUserStore((state) => state);
+    const { userId } = useUserStore();
     const [isEdit, setIsEdit] = useState(false);
     const [commentContent, setCommentContent] = useState('');
 

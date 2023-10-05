@@ -34,6 +34,13 @@ export const RowSpaceBetweenCenter = () => css`
     align-items: center;
 `;
 
+export const RowSpaceBetweenEnd = () => css`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: end;
+`;
+
 export const RowCenterCenter = () => css`
     display: flex;
     flex-direction: row;

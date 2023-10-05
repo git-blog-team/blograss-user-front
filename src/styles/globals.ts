@@ -10,29 +10,38 @@ export const globalStyles = () => css`
     *::before {
         box-sizing: border-box;
     }
-
+    html {
+        font-size: 62.5%;
+    }
     body {
         background-color: #f5f5f5;
+        min-width: 30rem;
+        min-height: 100vh;
     }
 
     main {
-        margin-top: 82px;
+        margin-top: 6rem;
         display: flex;
         flex-direction: column;
         align-items: center;
         > section {
-            max-width: 1400px;
+            max-width: 140rem;
             width: 100%;
         }
     }
 
     a {
         text-decoration: none;
+        color: inherit;
+
+        &:active {
+            color: inherit;
+        }
     }
 
     label {
-        font-size: 24px;
-        line-height: 36px;
+        font-size: 2.4rem;
+        line-height: 3.6rem;
         color: ${theme.colors.black};
     }
 `;

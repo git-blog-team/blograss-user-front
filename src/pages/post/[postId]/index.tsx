@@ -1,11 +1,12 @@
 import { postAPI } from '@/api/postAPI';
 import Button from '@/components/common/Button';
 import Comment from '@/parts/post/comment/Comment';
-import { useUserStore } from '@/store/userStore';
+import { useUserStore } from '@/store';
+
 import { RowSpaceBetweenCenter } from '@/styles/flexModules';
-import { PostItem } from '@/types/postType';
+import { IPostDetailProps } from '@/types/postType';
 import styled from '@emotion/styled';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { GetServerSideProps } from 'next';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
@@ -16,48 +17,40 @@ const EditorViewer = dynamic(() => import('@/components/post/EditorViewer'), {
     ssr: false,
 });
 
-export default function PostDetail() {
+export default function PostDetail({ data }: { data: IPostDetailProps }) {
+    const USER_STORE = useUserStore();
+    const { userId: loginUser } = USER_STORE;
     const { push } = useRouter();
-    const { query } = useRouter();
-    const postId = (query.postId ?? '') as string;
-    const { data } = useQuery<PostItem, Error>(
-        ['postData', postId],
 
-        () => postAPI.getPostDetail({ postId }),
-        {
-            enabled: !!postId,
-        },
-    );
     const { mutate } = useMutation(postAPI.deletePost, {
         onSuccess: () => {
             push('/');
         },
     });
 
-    const loginUser = useUserStore((state) => state.userId);
     return (
         <section>
             <StyledWrapperViewer>
-                <h1>{data?.title}</h1>
+                <h1>{data.title}</h1>
                 <StyledWrapperSubData>
                     <span>
-                        by <b>{data?.user?.userId}</b>
-                        {format(data?.createdAt ?? '')}
+                        by <b>{data.user.userId}</b>
+                        {format(data.createdAt ?? '')}
                     </span>
                     <div>
-                        {loginUser === data?.user?.userId && (
+                        {loginUser === data.user.userId && (
                             <Link href={`/editpost/${data.postId}`}>
                                 <Button>수정</Button>
                             </Link>
                         )}
-                        {loginUser === data?.user?.userId && (
+                        {loginUser === data.user.userId && (
                             <Button onClick={() => mutate(data.postId)}>
                                 삭제
                             </Button>
                         )}
                     </div>
                 </StyledWrapperSubData>
-                <EditorViewer initialValue={data?.content ?? ''} />
+                <EditorViewer initialValue={data.content} />
             </StyledWrapperViewer>
             <Comment />
         </section>
