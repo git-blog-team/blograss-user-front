@@ -16,6 +16,7 @@ import { useMutation } from '@tanstack/react-query';
 import Image from 'next/image';
 import Button from '@/components/common/Button';
 import { useUserStore } from '@/store';
+import { MY_POST_POST_URL } from '@/constants/page';
 
 export default function Header() {
     const { push } = useRouter();
@@ -63,8 +64,7 @@ export default function Header() {
                             <img src="" />
                             {/* TODO : 유저프로필사진 연동 */}
                             <ul>
-                                <Link href="/">내 포스트</Link>
-                                {/* TODO : 내포스트 경로 연결 */}
+                                <Link href={MY_POST_POST_URL}>내 포스트</Link>
                                 <Link href="/user-setting">설정</Link>
                                 <button onClick={() => mutate()}>
                                     로그아웃

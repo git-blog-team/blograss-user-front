@@ -1,5 +1,3 @@
-import { BLOGRASS_NEW_POST_PAGE } from '@/constants/api';
-
 import {
     ColumnFlexStartFlexStart,
     RowFlexEndCenter,
@@ -8,13 +6,9 @@ import {
 } from '@/styles/flexModules';
 
 import styled from '@emotion/styled';
-import Link from 'next/link';
-import Button from '../common/Button';
-import { useUserStore } from '@/store';
 import { HighlightOutlined, RightOutlined } from '@ant-design/icons';
 
 export default function ListPageHeader() {
-    const { isLogin } = useUserStore();
     return (
         <StyedWrapper>
             <StyledNotice>
@@ -27,17 +21,7 @@ export default function ListPageHeader() {
                 </div>
                 <RightOutlined style={{ color: 'gray', fontSize: '2rem' }} />
             </StyledNotice>
-            <StyledWrapperNav>
-                <form action="">
-                    <input type="text" />
-                    <Button>검색</Button>
-                </form>
-                {isLogin && (
-                    <Link href={BLOGRASS_NEW_POST_PAGE}>
-                        <Button>새 잔디심기</Button>
-                    </Link>
-                )}
-            </StyledWrapperNav>
+            <StyledWrapperNav></StyledWrapperNav>
         </StyedWrapper>
     );
 }
