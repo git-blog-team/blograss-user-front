@@ -24,6 +24,7 @@ export const globalStyles = () => css`
         display: flex;
         flex-direction: column;
         align-items: center;
+        padding: 0 2rem;
         > section {
             max-width: 140rem;
             width: 100%;
@@ -43,6 +44,10 @@ export const globalStyles = () => css`
         font-size: 2.4rem;
         line-height: 3.6rem;
         color: ${theme.colors.black};
+    }
+
+    input:focus {
+        outline: none;
     }
 `;
 

@@ -4,6 +4,7 @@ import {
     BLOGRASS_DEL_POST,
     BLOGRASS_GET_POST_DETAIL,
     BLOGRASS_GET_POST_LIST,
+    BLOGRASS_GET_USER_POST_LIST,
     BLOGRASS_PUT_POST,
 } from '@/constants/api';
 import axios from './axiosInterceptors';
@@ -28,10 +29,17 @@ export const postAPI = {
             `${BLOGRASS_API_BASE_URL}${BLOGRASS_GET_POST_DETAIL}${postId}`,
         );
     },
-    getPostList: async () => {
-        return await axios.get(
-            `${BLOGRASS_GET_POST_LIST}keyword=&page=1&limit=20&sortField=createdAt&sortOrder=DESC`,
+    getPostList: (params: string) => async () => {
+        const { data }: AxiosResponse = await axios.get(
+            `${BLOGRASS_GET_POST_LIST}${params}`,
         );
+        return data;
+    },
+    getUserPostList: (params: string) => async () => {
+        const { data }: AxiosResponse = await axios.get(
+            `${BLOGRASS_GET_USER_POST_LIST}${params}`,
+        );
+        return data;
     },
     getPostDetail: async ({
         postId,
