@@ -21,9 +21,9 @@ export const useFilter = ({ filterOptions, hasSearch }) => {
     const router = useRouter();
     const { pathname, query } = router;
 
-    const getFilterString = (filterOptions) => {
-        const { filterName, id, ...filterItem } = filterOptions;
-        const search = hasSearch ? { keyword } : {};
+    const getFilterString = (filterOption, withKeyword = hasSearch) => {
+        const { filterName, id, ...filterItem } = filterOption;
+        const search = withKeyword ? { keyword } : {};
         const filter = { ...filterItem, ...search };
 
         const result = qs.stringify(filter, {
@@ -33,7 +33,9 @@ export const useFilter = ({ filterOptions, hasSearch }) => {
         return result;
     };
 
-    const defaultFilterString: string = getFilterString(filterOptions[0]);
+    const defaultFilterString: string = `${
+        hasSearch ? 'keyword=&' : ''
+    }${getFilterString(filterOptions[0], false)}`;
 
     const handleFilter = (index: number) => () => {
         router.replace({
@@ -44,6 +46,7 @@ export const useFilter = ({ filterOptions, hasSearch }) => {
             },
         });
     };
+
     const handleEnterKey = useEnter(handleFilter(filterIndex));
 
     const filterRender = () => {

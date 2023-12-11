@@ -20,7 +20,7 @@ export const BLOGRASS_TOKEN_REPUBLISH = '/auth/tokenrepubilsh';
 export const BLOGRASS_COMMENT = '/comment';
 export const BLOGRASS_CREATE_NEW_POST = '/post';
 export const BLOGRASS_GET_COMMENT_LIST = '/comment?';
-export const BLOGRASS_GET_POST_DETAIL = '/post?postId=';
+export const BLOGRASS_GET_POST_DETAIL = '/post?urlSlug=';
 export const BLOGRASS_GET_POST_LIST = '/post/list?';
 export const BLOGRASS_GET_USER_POST_LIST = '/post/userlist?';
 export const BLOGRASS_DEL_POST = '/post';

@@ -1,4 +1,5 @@
 import { postAPI } from '@/api/postAPI';
+import AnotherPost from '@/components/common/AnotherPost';
 import Button from '@/components/common/Button';
 import Comment from '@/parts/post/comment/Comment';
 import { useUserStore } from '@/store';
@@ -20,47 +21,58 @@ const EditorViewer = dynamic(() => import('@/components/post/EditorViewer'), {
 export default function PostDetail({ data }: { data: IPostDetailProps }) {
     const USER_STORE = useUserStore();
     const { userId: loginUser } = USER_STORE;
-    const { push } = useRouter();
-
+    const { replace } = useRouter();
+    const { currentPost: currentPostData, nextPost, prevPost } = data;
     const { mutate } = useMutation(postAPI.deletePost, {
         onSuccess: () => {
-            push('/');
+            replace('/');
         },
     });
-
+    const onClickEdit = () => {
+        replace({
+            pathname: `/editpost/${currentPostData.urlSlug}`,
+            query: {
+                postUserId: currentPostData.user?.userId,
+            },
+        });
+    };
     return (
         <section>
             <StyledWrapperViewer>
-                <h1>{data.title}</h1>
+                <h1>{currentPostData.title}</h1>
                 <StyledWrapperSubData>
                     <span>
-                        by <b>{data.user.userId}</b>
-                        {format(data.createdAt ?? '')}
+                        by <b>{currentPostData.user?.userId}</b>
+                        {format(currentPostData.createdAt ?? '')}
                     </span>
                     <div>
-                        {loginUser === data.user.userId && (
-                            <Link href={`/editpost/${data.postId}`}>
-                                <Button>수정</Button>
-                            </Link>
+                        {loginUser === currentPostData.user?.userId && (
+                            <Button onClick={onClickEdit}>수정</Button>
                         )}
-                        {loginUser === data.user.userId && (
-                            <Button onClick={() => mutate(data.postId)}>
+                        {loginUser === currentPostData.user?.userId && (
+                            <Button
+                                onClick={() => mutate(currentPostData.postId)}
+                            >
                                 삭제
                             </Button>
                         )}
                     </div>
                 </StyledWrapperSubData>
-                <EditorViewer initialValue={data.content} />
+                <EditorViewer initialValue={currentPostData.content} />
+                <AnotherPost nextPost={nextPost} prevPost={prevPost} />
             </StyledWrapperViewer>
-            <Comment />
+            <Comment postId={currentPostData.postId} />
         </section>
     );
 }
 
 export const getServerSideProps: GetServerSideProps = async ({
-    query: { postId },
+    query: { postId, postUserId },
 }) => {
-    const { data } = await postAPI.getPostDetailServer({ postId });
+    const { data } = await postAPI.getPostDetailServer({
+        urlSlug: postId,
+        postUserId,
+    });
 
     return {
         props: {
@@ -87,5 +99,5 @@ const StyledWrapperViewer = styled.div`
 `;
 
 const StyledWrapperSubData = styled.div`
-    ${RowSpaceBetweenCenter}
+    ${RowSpaceBetweenCenter};
 `;

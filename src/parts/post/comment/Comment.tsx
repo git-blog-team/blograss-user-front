@@ -3,15 +3,13 @@ import { RowSpaceBetweenCenter } from '@/styles/flexModules';
 import styled from '@emotion/styled';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import _ from 'lodash';
-import { useRouter } from 'next/router';
 import { ChangeEvent, useEffect, useState } from 'react';
 import CommentItem from './CommentItem';
 import { CommentListData } from '@/types/commentType';
+import { useEnter } from '@/hooks/commons';
+import { DEBOUNCE_OPTION, DEBOUNCE_TIME } from '@/constants/common';
 
-export default function Comment() {
-    const { query } = useRouter();
-
-    const postId = (query.postId ?? '') as string;
+export default function Comment({ postId }: { postId: string }) {
     const [commentContent, setCommentContent] = useState('');
 
     const { data, refetch } = useQuery<CommentListData, Error>(
@@ -23,7 +21,7 @@ export default function Comment() {
                 page: 1,
                 limit: 10,
                 sortField: 'createdAt',
-                sortOrder: 'ASC',
+                sortOrder: 'DESC',
             }),
         {
             enabled: false,
@@ -40,11 +38,17 @@ export default function Comment() {
     const handleComment = (e: ChangeEvent<HTMLInputElement>) => {
         setCommentContent(e.target.value);
     };
-    const handleSubmitComment = async () => {
-        if (!commentContent) return;
-        await postComment({ post: { postId }, content: commentContent });
-    };
+    const handleSubmitComment = _.debounce(
+        async () => {
+            if (!commentContent) return;
+            await postComment({ post: { postId }, content: commentContent });
+        },
+        DEBOUNCE_TIME,
+        DEBOUNCE_OPTION,
+    );
     const commentData = data?.result?.[0].content;
+
+    const handleEnterKey = useEnter(handleSubmitComment);
 
     useEffect(() => {
         if (!data && postId) {
@@ -57,7 +61,11 @@ export default function Comment() {
             <StyledWrapperViewer>
                 <h2>댓글 {data?.result?.[0].totalElements}</h2>
                 <div>
-                    <input value={commentContent} onChange={handleComment} />
+                    <input
+                        value={commentContent}
+                        onChange={handleComment}
+                        onKeyDown={handleEnterKey}
+                    />
                     <button
                         onClick={handleSubmitComment}
                         disabled={!commentContent}
