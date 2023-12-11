@@ -6,7 +6,7 @@ export interface ImgesArrayItem {
     url: string;
 }
 
-export interface IPostDetailProps {
+export interface PostDetailData {
     postId: string;
     title: string;
     content: string;
@@ -15,6 +15,13 @@ export interface IPostDetailProps {
     images: PostImages[] | [];
     createdAt: string;
     updatedAt: string;
+    urlSlug: string;
+    directory: string;
+}
+export interface IPostDetailProps {
+    currentPost: PostDetailData;
+    nextPost: PostDetailData;
+    prevPost: PostDetailData;
 }
 
 export interface PostNew {
@@ -24,7 +31,8 @@ export interface PostNew {
 }
 
 export interface PostDetailParams {
-    postId: string | string[] | undefined;
+    urlSlug: string | string[] | undefined;
+    postUserId: string | string[] | undefined;
 }
 
 export interface PostImages extends ImgesArrayItem {
@@ -41,20 +49,27 @@ export interface PostItem {
     images: PostImages[] | [];
     createdAt: string;
     updatedAt: string;
+    urlSlug: string;
 }
 
 export interface PostUpdate extends PostNew {
-    postId: string;
+    directory: string;
+    urlSlug: string;
 }
 
 export interface IPropsEditorPage {
     onSubmit: (e: FormEvent) => void;
     setTitle: (title: string) => void;
     editorRef: RefObject<Editor>;
-    data?: IPostDetailProps;
+    data?: PostDetailData;
 }
 
 export interface IPropsPostEditor {
     editorRef: RefObject<Editor>;
     initialValue?: string;
+}
+
+export interface IAnotherPostProps {
+    nextPost: PostDetailData;
+    prevPost: PostDetailData;
 }

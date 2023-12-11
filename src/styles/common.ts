@@ -27,4 +27,9 @@ export const StyledTapItem = styled.li<{ isFocus: boolean }>`
     :hover {
         color: ${(props) => (props.isFocus ? 'green' : 'yellowgreen')};
     }
+
+    > a {
+        display: block;
+        width: 100%;
+    }
 `;

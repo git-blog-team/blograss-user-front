@@ -9,12 +9,18 @@ import { useRouter } from 'next/router';
 import { FormEvent, RefObject, useRef, useState } from 'react';
 
 export default function EditPost({ data }: { data: IPostDetailProps }) {
-    const [title, setTitle] = useState(data.title);
-    const { push } = useRouter();
+    const { currentPost: currentPostData } = data;
+    const [title, setTitle] = useState(currentPostData.title);
+    const { replace } = useRouter();
     const editorRef: RefObject<Editor> = useRef(null);
     const { mutate } = useMutation(postAPI.putPostDetail, {
         onSuccess: ({ data: { result } }) => {
-            push(`/post/${result}`);
+            replace({
+                pathname: `/post/${result}`,
+                query: {
+                    postUserId: currentPostData.user.userId,
+                },
+            });
         },
     });
 
@@ -23,9 +29,10 @@ export default function EditPost({ data }: { data: IPostDetailProps }) {
         const { markDownContent, imgArray } = getContentFromRef(editorRef);
         if (markDownContent !== undefined)
             mutate({
-                postId: data.postId,
+                urlSlug: currentPostData.urlSlug,
                 title,
                 content: markDownContent,
+                directory: currentPostData.directory,
                 images: imgArray,
             });
     };
@@ -34,13 +41,13 @@ export default function EditPost({ data }: { data: IPostDetailProps }) {
             onSubmit={onSubmitEditPost}
             setTitle={setTitle}
             editorRef={editorRef}
-            data={data}
+            data={currentPostData}
         />
     );
 }
 
 export const getServerSideProps: GetServerSideProps = async ({
-    query: { postId },
+    query: { postId, postUserId },
     req,
 }) => {
     const cookies = req.headers.cookie;
@@ -59,7 +66,10 @@ export const getServerSideProps: GetServerSideProps = async ({
         };
     }
 
-    const { data } = await postAPI.getPostDetailServer({ postId });
+    const { data } = await postAPI.getPostDetailServer({
+        urlSlug: postId,
+        postUserId,
+    });
 
     return {
         props: {

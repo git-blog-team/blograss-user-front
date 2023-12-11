@@ -24,9 +24,9 @@ export const postAPI = {
             images: images,
         });
     },
-    getPostDetailServer: async ({ postId }: PostDetailParams) => {
+    getPostDetailServer: async ({ urlSlug, postUserId }: PostDetailParams) => {
         return await Axios.get(
-            `${BLOGRASS_API_BASE_URL}${BLOGRASS_GET_POST_DETAIL}${postId}`,
+            `${BLOGRASS_API_BASE_URL}${BLOGRASS_GET_POST_DETAIL}${urlSlug}&userId=${postUserId}`,
         );
     },
     getPostList: (params: string) => async () => {
@@ -58,12 +58,19 @@ export const postAPI = {
             },
         });
     },
-    putPostDetail: async ({ postId, title, content, images }: PostUpdate) => {
+    putPostDetail: async ({
+        urlSlug,
+        title,
+        content,
+        images,
+        directory,
+    }: PostUpdate) => {
         return await axios.put(BLOGRASS_PUT_POST, {
-            postId,
+            urlSlug,
             title,
             content,
             images: images,
+            directory,
         });
     },
 };

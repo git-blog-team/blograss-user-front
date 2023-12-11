@@ -6,13 +6,21 @@ import { FormEvent, RefObject, useRef, useState } from 'react';
 import EditorPage from '@/components/common/EditorPage';
 import { getContentFromRef } from '@/utils/getContentFromRef';
 import { GetServerSideProps } from 'next';
+import { BLOGRASS_BASE_URL } from '@/constants/api';
+import { useUserStore } from '@/store';
 
 export default function NewPost() {
     const [title, setTitle] = useState('');
+    const { userId } = useUserStore();
     const { push } = useRouter();
     const { mutate } = useMutation(postAPI.postNew, {
         onSuccess: ({ data: { result } }) => {
-            push(`/post/${result}`);
+            push({
+                pathname: `${BLOGRASS_BASE_URL}/post/${result}`,
+                query: {
+                    postUserId: userId,
+                },
+            });
         },
     });
     const editorRef: RefObject<Editor> = useRef(null);

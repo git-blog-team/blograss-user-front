@@ -19,6 +19,12 @@ export const ColumnFlexStartCenter = () => css`
     justify-content: flex-start;
     align-items: center;
 `;
+export const ColumnCenterFlexEnd = () => css`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+`;
 
 export const ColumnCenterCenter = () => css`
     display: flex;

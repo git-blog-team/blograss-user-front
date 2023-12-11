@@ -1,4 +1,6 @@
 import { commentAPI } from '@/api/commentAPI';
+import { DEBOUNCE_OPTION, DEBOUNCE_TIME } from '@/constants/common';
+import { useEnter } from '@/hooks/commons';
 import { useUserStore } from '@/store';
 
 import {
@@ -13,6 +15,7 @@ import {
     RefetchQueryFilters,
     useMutation,
 } from '@tanstack/react-query';
+import _ from 'lodash';
 import { ChangeEvent, useEffect, useState } from 'react';
 
 export default function CommentItem(props: {
@@ -27,8 +30,18 @@ export default function CommentItem(props: {
     const [isEdit, setIsEdit] = useState(false);
     const [commentContent, setCommentContent] = useState('');
 
-    const { mutate: deleteComment } = useMutation(commentAPI.deleteComment);
-    const { mutate: editComment } = useMutation(commentAPI.editComment);
+    const { mutate: deleteComment } = useMutation(commentAPI.deleteComment, {
+        onSuccess: async () => {
+            await refetchComment();
+            alert('삭제되었습니다.');
+        },
+    });
+    const { mutate: editComment } = useMutation(commentAPI.editComment, {
+        onSuccess: async () => {
+            await refetchComment();
+            alert('댓글이 수정되었습니다.');
+        },
+    });
 
     const handleComment = (e: ChangeEvent<HTMLInputElement>) => {
         setCommentContent(e.target.value);
@@ -37,7 +50,7 @@ export default function CommentItem(props: {
     const handleIsEdit = async () => {
         try {
             let isConfirm = true;
-            if (isEdit && !!commentContent) {
+            if (isEdit && content !== commentContent) {
                 isConfirm = await confirm(
                     '수정중인 댓글이 있지만 취소하시겠습니까?',
                 );
@@ -56,25 +69,27 @@ export default function CommentItem(props: {
             const isConfirmDelete = await confirm('댓글을 삭제하시겠습니까?');
 
             if (!isConfirmDelete) return;
-
             await deleteComment({ commentId });
-            refetchComment();
-            alert('삭제되었습니다.');
         } catch (e: Error | unknown) {
             console.log(e);
         }
     };
 
-    const handleEditComment = async () => {
-        try {
-            await editComment({ commentId, content: commentContent });
-            alert('댓글이 수정되었습니다.');
-        } catch (e: Error | unknown) {
-            console.log(e);
-        } finally {
-            setIsEdit(false);
-        }
-    };
+    const handleEditComment = _.debounce(
+        async () => {
+            try {
+                await editComment({ commentId, content: commentContent });
+            } catch (e: Error | unknown) {
+                console.log(e);
+            } finally {
+                setIsEdit(false);
+            }
+        },
+        DEBOUNCE_TIME,
+        DEBOUNCE_OPTION,
+    );
+
+    const handleEnterKey = useEnter(handleEditComment);
 
     useEffect(() => {
         setCommentContent(content);
@@ -106,6 +121,7 @@ export default function CommentItem(props: {
                     readOnly={!isEdit}
                     value={commentContent}
                     onChange={handleComment}
+                    onKeyDown={handleEnterKey}
                 />
             </div>
         </StyledCommentItem>

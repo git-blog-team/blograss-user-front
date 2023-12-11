@@ -10,14 +10,25 @@ import {
 import { format } from 'timeago.js';
 import theme from '@/styles/theme';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 const blurDataURL =
     'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mN0OJJcDwAEmwHoBp6SWAAAAABJRU5ErkJggg==';
 
 export default function PostCardItem({ postItem }: { postItem: PostItem }) {
+    const router = useRouter();
+
+    const onClickPost = () => {
+        router.push({
+            pathname: `${BLOGRASS_BASE_URL}/post/${postItem.urlSlug}`,
+            query: {
+                postUserId: postItem.user.userId,
+            },
+        });
+    };
     return (
         <StyledWrapperPostCardItem>
-            <Link href={`${BLOGRASS_BASE_URL}/post/${postItem.postId}`}>
+            <div onClick={onClickPost}>
                 <h1>{postItem.title}</h1>
                 <span>
                     {postItem.user.userName} | {postItem.user.userId}
@@ -49,7 +60,7 @@ export default function PostCardItem({ postItem }: { postItem: PostItem }) {
                         {postItem.content}
                     </StyledPostCardItemContent>
                 </StyledWrapperText>
-            </Link>
+            </div>
         </StyledWrapperPostCardItem>
     );
 }
@@ -63,7 +74,7 @@ const StyledWrapperPostCardItem = styled.article`
         box-shadow: 0px 2px 4px 0px #a0ab9c;
     }
 
-    > a {
+    > div {
         ${ColumnFlexStartCenter}
         width: 100%;
         height: 100%;
